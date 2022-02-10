@@ -158,32 +158,29 @@ function deleteTask() {
 
 function LocalStorageSave() {
     window.localStorage.setItem('list_tarefas', JSON.stringify(task_list))
-    //var json_string = JSON.stringify(task_list)
-    // var usuario = { nome: "John Smith da Silva", idade: 29 };
-    // window.localStorage.setItem('usuario', JSON.stringify(usuario));
 }
 
 function downloadFile() {
     var json_string = JSON.stringify(task_list)
     
     var date = new Date()
-    var dia     = date.getDate();           // 1-31
-    //var dia_sem = date.getDay();            // 0-6 (zero=domingo)
-    var mes     = date.getMonth();          // 0-11 (zero=janeiro)
-    //var ano2    = date.getYear();           // 2 dígitos
-    var ano4    = date.getFullYear();       // 4 dígitos
-    var hora    = date.getHours();          // 0-23
-    var min     = date.getMinutes();        // 0-59
-    var seg     = date.getSeconds();        // 0-59
-    //var mseg    = date.getMilliseconds();   // 0-999
-    //var tz      = date.getTimezoneOffset(); // em minutos
+    var day = date.getDate();              // 1-31
+    //var day_week = date.getDay();        // 0-6 (zero=domingo)
+    var month = date.getMonth();           // 0-11 (zero=janeiro)
+    //var year_2 = date.getYear();         // 2 dígitos
+    var year_4 = date.getFullYear();       // 4 dígitos
+    var hour = date.getHours();            // 0-23
+    var min = date.getMinutes();           // 0-59
+    var sec = date.getSeconds();           // 0-59
+    //var msec = date.getMilliseconds();   // 0-999
+    //var tz = date.getTimezoneOffset();   // em minutos
 
-    var str_data = ano4 + '-' + (mes+1) + '-' + dia;
-    var str_hora = hora + '-' + min + '-' + seg;
+    var str_date = year_4 + '-' + (month+1) + '-' + day;
+    var str_time = hour + '-' + min + '-' + sec;
 
-    let titulo = "tasks_" + str_data + "_" + str_hora;
+    let file_name = "tasks_" + str_date + "_" + str_time;
     let blob = new Blob([json_string], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, titulo + ".txt");
+    saveAs(blob, file_name + ".txt");
 }
 
 document.getElementById('inputFile').addEventListener('change', function() {
