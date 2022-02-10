@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Lista de tarefas</title>    
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-table.css" media="screen" />
+</head>
+
+<body id="body">
+    <div id="content">
+
+        <h2 class="title">Lista de tarefas</h2>
+
+        <div class="input-button">
+
+            <div>
+                <label for="task_list" class="label">ID</label>
+                <label for="task_list" id="id" class="label"></label>
+            </div> 
+
+            <div>
+                <label for="task_list" class="label">Número da SM</label>
+                <input type="text" id="sm" class="textbox" onkeypress="return onlynumber();">
+            </div> 
+        
+            <div>
+                <label for="task_list" class="label">Nome da SM</label>
+                <input type="text" id="description" class="textbox">
+            </div>
+        
+            <div>
+                <label for="task_list" class="label">Share Point ID</label>
+                <input type="text" id="spid" class="textbox" onkeypress="return onlynumber();">
+            </div> 
+
+            <div>
+                <label for="task_list" class="label">ESIM</label>
+                <input type="text" id="esim" class="textbox" onkeypress="return onlynumber();">
+            </div> 
+
+            <div>
+                <label for="task_list" class="label">Liberações</label>
+                <input type="text" id="liberations" class="textbox">
+            </div> 
+            
+            <div id="command_buttons">
+                <img src="src/save_icon.svg" onclick="addTask()" class="button">
+                <img src="src/update_icon.svg" onclick="updateTask()" class="button">
+                <img src="src/delete_icon.svg" onclick="deleteTask()" class="button">
+            </div>            
+
+        </div>
+
+        <table id='list_table'>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>SM</th>
+                    <th>Descrição</th>
+                    <th>Share Point ID</th>
+                    <th>ESIM</th>
+                    <th>Liberações</th>
+                <tr>
+            </thead>
+
+            <tbody id="table_body"></tbody>
+        </table>
+
+        <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
+        <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->
+        <br>
+        <pre id="output"></pre>
+        <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button">
+
+    </div>
+
+    <script src="script/main.js"></script>
+    <script src="script/FileSaver.js"></script>
+</body>
+
+</html>
