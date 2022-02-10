@@ -175,8 +175,8 @@ function downloadFile() {
     //var msec = date.getMilliseconds();   // 0-999
     //var tz = date.getTimezoneOffset();   // em minutos
 
-    var str_date = year_4 + '-' + (month+1) + '-' + day;
-    var str_time = hour + '-' + min + '-' + sec;
+    var str_date = year_4 + '-' + doubleDigit((month+1)) + '-' + doubleDigit(day);
+    var str_time = doubleDigit(hour) + '-' + doubleDigit(min) + '-' + doubleDigit(sec);
 
     let file_name = "tasks_" + str_date + "_" + str_time;
     let blob = new Blob([json_string], { type: "text/plain;charset=utf-8" });
@@ -203,4 +203,12 @@ function onlynumber(evt) {
        theEvent.returnValue = false;
        if(theEvent.preventDefault) theEvent.preventDefault();
     }
- }
+}
+
+function doubleDigit(number){
+    if (number < 9){
+        return "0"+number
+    }else{
+        return number
+    }
+}
