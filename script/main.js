@@ -25,12 +25,6 @@ function showTasks() {
 
         const pos = task_list.indexOf(item)
 
-        // const buttonRemove = document.createElement('button')
-        // buttonRemove.setAttribute('class', 'material-icons')
-        // const linkText = document.createTextNode('X')
-        // buttonRemove.appendChild(linkText)
-        // buttonRemove.setAttribute('onclick', `removeTask(${pos})`)
-
         var line = document.createElement("tr")
         var td_id = document.createElement("td")
         var td_sm = document.createElement("td")
@@ -38,7 +32,6 @@ function showTasks() {
         var td_spid = document.createElement("td")
         var td_esim = document.createElement("td")
         var td_liberations = document.createElement("td")
-        // var td_buttonRemove = document.createElement("td")
 
         var t_id = document.createTextNode(`${pos}`)
         var t_sm = document.createTextNode(array_item["sm"])
@@ -53,7 +46,6 @@ function showTasks() {
         td_spid.appendChild(t_spid)
         td_esim.appendChild(t_esim)
         td_liberations.appendChild(t_liberations)
-        // td_buttonRemove.appendChild(buttonRemove)
 
         line.appendChild(td_id)
         line.appendChild(td_sm)
@@ -62,7 +54,6 @@ function showTasks() {
         line.appendChild(td_esim)
         line.appendChild(td_liberations)
 
-        // line.appendChild(td_buttonRemove)
         line.setAttribute('onclick', `selectedTask(${pos})`)
 
         table_body.appendChild(line)
@@ -83,10 +74,8 @@ function addTask() {
     json_array["liberations"] = liberations.value
 
     var json = JSON.stringify(json_array)
-
     task_list.push(json)
 
-    //json = Object.assign({}, json_array)
     id.value = ""
     sm.value = ''
     description.value = ''
