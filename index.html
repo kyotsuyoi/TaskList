@@ -5,6 +5,7 @@
     <title>Lista de tarefas</title>    
     <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/style-table.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-progress.css" media="screen" />
 </head>
 
 <body id="body">
@@ -17,11 +18,15 @@
             <div>
                 <label for="task_list" class="label">ID</label>
                 <label for="task_list" id="id" class="label"></label>
+                <div id="myProgress">
+                    <div id="myBar">0%</div>
+                </div>
+                </br>
             </div> 
 
             <div>
                 <label for="task_list" class="label">Número da SM</label>
-                <input type="text" id="sm" class="textbox" onkeypress="return onlynumber();">
+                <input type="text" id="sm" class="textbox">
             </div> 
         
             <div>
@@ -31,19 +36,79 @@
         
             <div>
                 <label for="task_list" class="label">Share Point ID</label>
-                <input type="text" id="spid" class="textbox" onkeypress="return onlynumber();">
+                <input type="text" id="spid" class="textbox" onkeypress="return onlyNumber();">
             </div> 
 
             <div>
                 <label for="task_list" class="label">ESIM</label>
-                <input type="text" id="esim" class="textbox" onkeypress="return onlynumber();">
+                <input type="text" id="esim" class="textbox" onkeypress="return onlyNumber();">
             </div> 
 
             <div>
-                <label for="task_list" class="label">Liberações</label>
-                <input type="text" id="liberations" class="textbox">
+                <label for="task_list" class="label">Teste EH</label>
+                <input type="text" id="test_eh" class="textbox">
             </div> 
-            
+
+            <div>
+                <label for="task_list" class="label">Teste PRD</label>
+                <input type="text" id="test_prd" class="textbox">
+            </div> 
+
+            <label for="task_list" class="label">Liberações</label>
+            <button onclick="buttonHideLib()"></button>
+            <div id="div_liberations" style="display: none;">
+                <input type="text" id="lib" class="textbox">
+                
+                <div id="command_buttons">
+                    <img src="src/save_icon.svg" onclick="addLib()" class="button_small">
+                    <img src="src/delete_icon.svg" onclick="deleteLib()" class="button_small">
+                </div> 
+
+                <table id='list_lib_table' class="list_table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Numero da Liberação</th>
+                            <th>Evidencia Anexada</th>
+                            <th>Montagem Concluída</th>
+                            <th>Link</th>
+                        <tr>
+                    </thead>
+        
+                    <tbody id="table_lib_body"></tbody>
+                </table>
+            </div> 
+
+            </br>
+
+            <label for="task_list" class="label">Objetos</label>
+            <button onclick="buttonHideObjects()"></button>
+            <div id="div_objects" style="display: none;">                    
+                <input type="text" id="object_name" class="textbox">
+                <div id="command_buttons">
+                    <img src="src/save_icon.svg" onclick="addObject()" class="button_small">
+                    <img src="src/delete_icon.svg" onclick="deleteObject()" class="button_small">
+                </div> 
+
+                <table id='list_object_table' class="list_table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome do objeto</th>
+                            <th>Equalizado</th>
+                            <th>Teste ACT</th>
+                            <th>Teste PRD</th>
+                            <th>Link Bamboo</th>
+                            <th>Link GitHub</th>
+                        <tr>
+                    </thead>
+        
+                    <tbody id="table_object_body"></tbody>
+                </table>
+            </div>
+
+            </br>
+
             <div id="command_buttons">
                 <img src="src/save_icon.svg" onclick="addTask()" class="button">
                 <img src="src/update_icon.svg" onclick="updateTask()" class="button">
@@ -52,7 +117,8 @@
 
         </div>
 
-        <table id='list_table'>
+        </br>
+        <table id='list_table' class="list_table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -60,7 +126,9 @@
                     <th>Descrição</th>
                     <th>Share Point ID</th>
                     <th>ESIM</th>
-                    <th>Liberações</th>
+                    <th>Teste EH</th>
+                    <th>Teste PRD</th>
+                    <th>Link</th>
                 <tr>
             </thead>
 
@@ -75,6 +143,9 @@
 
     </div>
 
+    <script src="script/object.js"></script>
+    <script src="script/lib.js"></script>
+    <script src="script/task.js"></script>
     <script src="script/main.js"></script>
     <script src="script/FileSaver.js"></script>
 </body>

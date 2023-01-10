@@ -21,6 +21,10 @@
     width: 80px;
     cursor: pointer;
 }
+.button_small {
+    width: 40px;
+    cursor: pointer;
+}
 #body {    
     background-color:rgb(30, 30, 30);
     display: flex;

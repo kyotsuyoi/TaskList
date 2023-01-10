@@ -1,156 +1,57 @@
 const listElement = document.querySelector('ul')
 const inputElement = document.querySelector('input')
 
-const table_body = document.getElementById('table_body')
 var id = document.getElementById('id')
 var sm = document.getElementById('sm')
 var description = document.getElementById('description')
 var spid = document.getElementById('spid')
 var esim = document.getElementById('esim')
-var liberations = document.getElementById('liberations')
+var test_eh = document.getElementById('test_eh')
+var test_eh = document.getElementById('test_eh')
+var lib = document.getElementById('lib')
+var object_name = document.getElementById('object_name')
 
-var task_list = JSON.parse(window.localStorage.getItem('list_tarefas'))
-
-var selected_position = -1
+const div_liberations = document.getElementById('div_liberations')
+const div_objects = document.getElementById('div_objects')
 
 showTasks()
 
-function showTasks() {
-
-    table_body.innerHTML = ''
-
-    for (item of task_list) {
-
-        array_item = JSON.parse(item)
-
-        const pos = task_list.indexOf(item)
-
-        var line = document.createElement("tr")
-        var td_id = document.createElement("td")
-        var td_sm = document.createElement("td")
-        var td_desc = document.createElement("td")
-        var td_spid = document.createElement("td")
-        var td_esim = document.createElement("td")
-        var td_liberations = document.createElement("td")
-
-        var t_id = document.createTextNode(`${pos}`)
-        var t_sm = document.createTextNode(array_item["sm"])
-        var t_description = document.createTextNode(array_item["description"])
-        var t_spid = document.createTextNode(array_item["spid"])
-        var t_esim = document.createTextNode(array_item["esim"])
-        var t_liberations = document.createTextNode(array_item["liberations"])
-
-        td_id.appendChild(t_id)
-        td_sm.appendChild(t_sm)
-        td_desc.appendChild(t_description)
-        td_spid.appendChild(t_spid)
-        td_esim.appendChild(t_esim)
-        td_liberations.appendChild(t_liberations)
-
-        line.appendChild(td_id)
-        line.appendChild(td_sm)
-        line.appendChild(td_desc)
-        line.appendChild(td_spid)
-        line.appendChild(td_esim)
-        line.appendChild(td_liberations)
-
-        line.setAttribute('onclick', `selectedTask(${pos})`)
-
-        table_body.appendChild(line)
+function buttonHideLib(){
+    if (div_liberations.style.display === "none") {
+        div_liberations.style.display = 'inline'
+    }else{
+        div_liberations.style.display = 'none'
     }
 }
 
-function addTask() {
-    if (sm.value == "" || description.value == ""){
-        alert("Insira o número e descrição da SM")
-        return
-    }    
-
-    json_array = {}
-    json_array["sm"] = sm.value
-    json_array["description"] = description.value
-    json_array["spid"] = spid.value
-    json_array["esim"] = esim.value
-    json_array["liberations"] = liberations.value
-
-    var json = JSON.stringify(json_array)
-    task_list.push(json)
-
-    id.value = ""
-    sm.value = ''
-    description.value = ''
-    spid.value = ''
-    esim.value = ''
-    liberations.value = ''
-
-    showTasks()
-    LocalStorageSave()
-}
-
-function updateTask(){
-    if (sm.value == "" || description.value == ""){
-        alert("Insira o número e descrição da SM")
-        return
-    }  
-
-    if (selected_position == -1) {
-        return
+function buttonHideObjects(){
+    if (div_objects.style.display === "none") {
+        div_objects.style.display = 'inline'
+    }else{
+        div_objects.style.display = 'none'
     }
-
-    json_array = {}
-    json_array["sm"] = sm.value
-    json_array["description"] = description.value
-    json_array["spid"] = spid.value
-    json_array["esim"] = esim.value
-    json_array["liberations"] = liberations.value
-
-    var json = JSON.stringify(json_array)
-
-    task_list[selected_position] = json
-
-    showTasks()
-    LocalStorageSave()
 }
 
-function selectedTask(position){
-    var item = JSON.parse(task_list[position])
+function LocalStorageSave(action) {
+    switch (action){
+        case 1:
+            window.localStorage.setItem('temp_lib_list', JSON.stringify(temp_lib_list))
+        break
 
-    selected_position = position
+        case 2:
+            window.localStorage.setItem('temp_object_list', JSON.stringify(temp_object_list))
+        break
 
-    sm.value = item.sm
-    description.value = item.description
-    spid.value = item.spid
-    esim.value = item.esim
-    liberations.value = item.liberations
-
-    id.innerText = position
-}
-
-function deleteTask() {
-    if (selected_position == -1 || selected_position > task_list.length-1) {
-        return
+        default: //save all
+            window.localStorage.setItem('list_tarefas', JSON.stringify(task_list))
     }
-
-    task_list.splice(selected_position, 1)
-    LocalStorageSave()
-    showTasks()
-
-    selected_position = -1
-
-    id.innerText = ""
-    sm.value = ''
-    description.value = ''
-    spid.value = ''
-    esim.value = ''
-    liberations.value = ''
-}
-
-function LocalStorageSave() {
-    window.localStorage.setItem('list_tarefas', JSON.stringify(task_list))
+    
 }
 
 function downloadFile() {
-    var json_string = JSON.stringify(task_list)
+    json_array = {}
+    json_array["task_list"] = task_list
+    var json_string = JSON.stringify(json_array)
     
     var date = new Date()
     var day = date.getDate();              // 1-31
@@ -175,14 +76,16 @@ function downloadFile() {
 document.getElementById('inputFile').addEventListener('change', function() {
     var file = new FileReader()
     file.onload = () => {    
-        task_list = JSON.parse(file.result)
+        var json_task_list = JSON.parse(file.result)
+        task_list = json_task_list.task_list
         LocalStorageSave()
         showTasks()
+        task_list.length
     }
     file.readAsText(this.files[0])
 });
 
-function onlynumber(evt) {
+function onlyNumber(evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
     key = String.fromCharCode( key );
@@ -200,4 +103,109 @@ function doubleDigit(number){
     }else{
         return number
     }
+}
+
+function updateProgress(value) {
+    //if (i == 0) {
+    i = 1
+    var elem = document.getElementById("myBar")
+    var width = 0
+    var id = setInterval(frame, 10)
+    function frame() {
+        if (width >= value) {
+            clearInterval(id)
+            i = 0
+        } else {
+            width++
+            elem.style.width = width + "%"
+            elem.innerHTML = width + "%"
+        }
+    }
+    //}
+}
+
+function calculateProgress(){
+    var item = task_list[selected_position]
+
+    var score_sm = 0
+    var score_description = 0
+    var score_spid = 0
+    var score_esim = 0
+    var score_test_eh = 0
+    var score_test_prd = 0
+    
+    var score_lib_ev_anex = 0
+    var score_lib_mont_ok = 0
+    
+    var score_object_eqz = 0
+    var score_object_test_act = 0
+    var score_object_test_prd = 0
+
+    if(item.sm != null && item.sm != undefined && item.sm != ''){
+        score_sm = 1
+    }
+
+    if(item.description != null && item.description != undefined && item.description != ''){
+        score_description = 1
+    }
+
+    if(item.spid != null && item.spid != undefined && item.spid != ''){
+        score_spid = 2
+    }
+
+    if(item.esim != null && item.esim != undefined && item.esim != ''){
+        score_esim = 1
+    }
+
+    if(item.test_eh != null && item.test_eh != undefined && item.test_eh != ''){
+        score_test_eh = 1
+    }
+
+    if(item.test_prd != null && item.test_prd != undefined && item.test_prd != ''){
+        score_test_prd = 1
+    }
+
+    if((temp_lib_list != null && temp_lib_list != undefined && temp_lib_list != '') && temp_lib_list.length > 0){
+        temp_lib_list.forEach(item => {
+            if(item.check_ev_anex){
+                score_lib_ev_anex++
+            }
+            if(item.check_mont_ok){
+                score_lib_mont_ok++
+            }
+        })
+        score_lib_ev_anex = (score_lib_ev_anex * 100 / temp_lib_list.length)
+        score_lib_ev_anex = score_lib_ev_anex*0.13
+
+        score_lib_mont_ok = (score_lib_mont_ok * 100 / temp_lib_list.length)
+        score_lib_mont_ok = score_lib_mont_ok*0.1
+    } 
+
+    if((temp_object_list != null && temp_object_list != undefined && temp_object_list != '') && temp_object_list.length > 0){
+        temp_object_list.forEach(item => {
+            if(item.check_eqz){
+                score_object_eqz++
+            }
+            if(item.check_test_act){
+                score_object_test_act++
+            }
+            if(item.check_test_prd){
+                score_object_test_prd++
+            }
+        })
+        score_object_eqz = (score_object_eqz * 100 / temp_object_list.length)
+        score_object_eqz = score_object_eqz*0.3
+
+        score_object_test_act = (score_object_test_act * 100 / temp_object_list.length)
+        score_object_test_act = score_object_test_act*0.2
+
+        score_object_test_prd = (score_object_test_prd * 100 / temp_object_list.length)
+        score_object_test_prd = score_object_test_prd*0.2
+    } 
+
+    var score_total = score_sm + score_description + score_spid + score_esim + score_test_eh + score_test_prd + 
+    score_lib_ev_anex + score_lib_mont_ok +
+    score_object_eqz + score_object_test_act + score_object_test_prd
+
+    updateProgress(score_total)
 }
