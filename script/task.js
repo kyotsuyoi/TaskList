@@ -21,6 +21,7 @@ function showTasks() {
         var td_esim = document.createElement("td")
         var td_test_eh = document.createElement("td")
         var td_test_prd = document.createElement("td")
+        var td_progress = document.createElement("td")
         var td_link = document.createElement("td")
 
         var t_id = document.createTextNode(`${pos}`)
@@ -30,6 +31,7 @@ function showTasks() {
         var t_esim = document.createTextNode(item["esim"])
         var t_test_eh = document.createTextNode(item["test_eh"])
         var t_test_prd = document.createTextNode(item["test_prd"])
+        var t_progress = document.createTextNode(calculateTaskProgress(`${pos}`)+"%")
 
         var a = document.createElement('a');
         var linkText = document.createTextNode("LINK")
@@ -45,6 +47,7 @@ function showTasks() {
         td_esim.appendChild(t_esim)
         td_test_eh.appendChild(t_test_eh)
         td_test_prd.appendChild(t_test_prd)
+        td_progress.appendChild(t_progress)
         td_link.appendChild(t_link)
 
         line.appendChild(td_id)
@@ -54,6 +57,7 @@ function showTasks() {
         line.appendChild(td_esim)
         line.appendChild(td_test_eh)
         line.appendChild(td_test_prd)
+        line.appendChild(td_progress)
         line.appendChild(td_link)
 
         line.setAttribute('onclick', `selectedTask(${pos})`)

@@ -27,7 +27,7 @@ function showLibs() {
         var linkText = document.createTextNode("LINK")
         a.appendChild(linkText)
         a.title = "LINK"
-        a.href = "http://vwaipbr-esmap22/EsimWeb/LiberacaoDetalhe.asmx?sim_num="+esim.value+"&lib_num="+item["num"]
+        a.href = "http://EsimWeb/LiberacaoDetalhe.asmx?sim_num="+esim.value+"&lib_num="+item["num"]
         var t_link = a
 
         var check_ev_anex = item["check_ev_anex"]

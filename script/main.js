@@ -105,8 +105,7 @@ function doubleDigit(number){
     }
 }
 
-function updateProgress(value) {
-    //if (i == 0) {
+function updateProgress(value) {    
     i = 1
     var elem = document.getElementById("myBar")
     var width = 0
@@ -121,12 +120,19 @@ function updateProgress(value) {
             elem.innerHTML = width + "%"
         }
     }
-    //}
 }
 
 function calculateProgress(){
     var item = task_list[selected_position]
+    updateProgress(calc(item))    
+}
 
+function calculateTaskProgress(p_selected_position){
+    var item = task_list[p_selected_position] 
+    return Math.round(calc(item))
+}
+
+function calc(item){
     var score_sm = 0
     var score_description = 0
     var score_spid = 0
@@ -165,8 +171,8 @@ function calculateProgress(){
         score_test_prd = 1
     }
 
-    if((temp_lib_list != null && temp_lib_list != undefined && temp_lib_list != '') && temp_lib_list.length > 0){
-        temp_lib_list.forEach(item => {
+    if((item.lib_list != null && item.lib_list != undefined && item.lib_list != '') && item.lib_list.length > 0){
+        item.lib_list.forEach(item => {
             if(item.check_ev_anex){
                 score_lib_ev_anex++
             }
@@ -174,15 +180,15 @@ function calculateProgress(){
                 score_lib_mont_ok++
             }
         })
-        score_lib_ev_anex = (score_lib_ev_anex * 100 / temp_lib_list.length)
+        score_lib_ev_anex = (score_lib_ev_anex * 100 / item.lib_list.length)
         score_lib_ev_anex = score_lib_ev_anex*0.13
 
-        score_lib_mont_ok = (score_lib_mont_ok * 100 / temp_lib_list.length)
+        score_lib_mont_ok = (score_lib_mont_ok * 100 / item.lib_list.length)
         score_lib_mont_ok = score_lib_mont_ok*0.1
     } 
 
-    if((temp_object_list != null && temp_object_list != undefined && temp_object_list != '') && temp_object_list.length > 0){
-        temp_object_list.forEach(item => {
+    if((item.object_list != null && item.object_list != undefined && item.object_list != '') && item.object_list.length > 0){
+        item.object_list.forEach(item => {
             if(item.check_eqz){
                 score_object_eqz++
             }
@@ -193,19 +199,19 @@ function calculateProgress(){
                 score_object_test_prd++
             }
         })
-        score_object_eqz = (score_object_eqz * 100 / temp_object_list.length)
+        score_object_eqz = (score_object_eqz * 100 / item.object_list.length)
         score_object_eqz = score_object_eqz*0.3
 
-        score_object_test_act = (score_object_test_act * 100 / temp_object_list.length)
+        score_object_test_act = (score_object_test_act * 100 / item.object_list.length)
         score_object_test_act = score_object_test_act*0.2
 
-        score_object_test_prd = (score_object_test_prd * 100 / temp_object_list.length)
+        score_object_test_prd = (score_object_test_prd * 100 / item.object_list.length)
         score_object_test_prd = score_object_test_prd*0.2
     } 
 
     var score_total = score_sm + score_description + score_spid + score_esim + score_test_eh + score_test_prd + 
     score_lib_ev_anex + score_lib_mont_ok +
-    score_object_eqz + score_object_test_act + score_object_test_prd
+    score_object_eqz + score_object_test_act + score_object_test_prd 
 
-    updateProgress(score_total)
+    return score_total
 }
