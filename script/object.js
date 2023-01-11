@@ -21,13 +21,8 @@ function showObjects() {
         var td_check_test_prd = document.createElement("td")
         var td_link_bamboo = document.createElement("td")
         var td_link_git = document.createElement("td")
-
-        var s_description = item["object_name"]
-        if(s_description.length > 30){
-            var c = s_description.length - 28
-            s_description = '...'+s_description.substring(c,s_description.length)
-        }
         
+        var s_description = item["object_name"]
         var isTFSFile = false
         var str = s_description.split('.')
         str = str[1]
@@ -37,6 +32,11 @@ function showObjects() {
         }
         if(str.length>0){
             isTFSFile = true
+        }
+
+        if(s_description.length > 30){
+            var c = s_description.length - 28
+            s_description = '...'+s_description.substring(c,s_description.length)
         }
 
         var t_id = document.createTextNode(`${pos}`)
