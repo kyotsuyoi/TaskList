@@ -24,11 +24,24 @@ function showObjects() {
 
         var s_description = item["object_name"]
         if(s_description.length > 30){
-            s_description = s_description.substring(0,28)+'...'
+            var c = s_description.length - 28
+            s_description = '...'+s_description.substring(c,s_description.length)
+        }
+        
+        var isTFSFile = false
+        var str = s_description.split('.')
+        str = str[1]
+
+        if(str == null || str == undefined){
+            str = ''
+        }
+        if(str.length>0){
+            isTFSFile = true
         }
 
         var t_id = document.createTextNode(`${pos}`)
         var t_name = document.createTextNode(s_description)
+        var t_link_git
         
         // var a = document.createElement('a');
         // var linkText = document.createTextNode("LINK")
@@ -43,6 +56,10 @@ function showObjects() {
         a.title = "LINK"
         a.href = "http://git/"+item["object_name"]
         var t_link_git = a
+
+        if(isTFSFile){
+            t_link_git = document.createTextNode('')
+        }
 
         var check_eqz = item["check_eqz"]
         var el_eqz_check = document.createElement("INPUT")
@@ -76,7 +93,7 @@ function showObjects() {
         line.appendChild(td_check_test_act)
         line.appendChild(td_check_test_prd)
         //line.appendChild(td_link_bamboo)
-        line.appendChild(td_link_git)
+        line.appendChild(td_link_git)        
 
         line.setAttribute('onclick', `selectedObject(${pos})`)
 
