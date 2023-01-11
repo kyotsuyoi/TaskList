@@ -57,7 +57,7 @@
             <label for="task_list" class="label">Liberações</label>
             <button onclick="buttonHideLib()"></button>
             <div id="div_liberations" style="display: none;">
-                <input type="text" id="lib" class="textbox">
+                <input type="text" id="lib" class="textbox" onkeypress="return onlyNumber();">
                 
                 <div id="command_buttons">
                     <img src="src/save_icon.svg" onclick="addLib()" class="button_small">
@@ -126,8 +126,8 @@
                     <th>Descrição</th>
                     <th>Share Point ID</th>
                     <th>ESIM</th>
-                    <th>Teste EH</th>
-                    <th>Teste PRD</th>
+                    <!-- <th>Teste EH</th>
+                    <th>Teste PRD</th> -->
                     <th>Progresso</th>
                     <th>Link</th>
                 <tr>

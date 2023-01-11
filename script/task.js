@@ -24,9 +24,14 @@ function showTasks() {
         var td_progress = document.createElement("td")
         var td_link = document.createElement("td")
 
+        var s_description = item["description"]
+        if(s_description.length > 30){
+            s_description = s_description.substring(0,28)+'...'
+        }
+
         var t_id = document.createTextNode(`${pos}`)
         var t_sm = document.createTextNode(item["sm"])
-        var t_description = document.createTextNode(item["description"])
+        var t_description = document.createTextNode(s_description)
         var t_spid = document.createTextNode(item["spid"])
         var t_esim = document.createTextNode(item["esim"])
         var t_test_eh = document.createTextNode(item["test_eh"])
@@ -55,8 +60,8 @@ function showTasks() {
         line.appendChild(td_desc)
         line.appendChild(td_spid)
         line.appendChild(td_esim)
-        line.appendChild(td_test_eh)
-        line.appendChild(td_test_prd)
+        // line.appendChild(td_test_eh)
+        // line.appendChild(td_test_prd)
         line.appendChild(td_progress)
         line.appendChild(td_link)
 

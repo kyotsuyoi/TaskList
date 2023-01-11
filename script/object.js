@@ -22,8 +22,13 @@ function showObjects() {
         var td_link_bamboo = document.createElement("td")
         var td_link_git = document.createElement("td")
 
+        var s_description = item["object_name"]
+        if(s_description.length > 30){
+            s_description = s_description.substring(0,28)+'...'
+        }
+
         var t_id = document.createTextNode(`${pos}`)
-        var t_name = document.createTextNode(item["object_name"])
+        var t_name = document.createTextNode(s_description)
         
         // var a = document.createElement('a');
         // var linkText = document.createTextNode("LINK")
