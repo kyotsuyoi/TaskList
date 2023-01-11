@@ -25,12 +25,12 @@ function showObjects() {
         var t_id = document.createTextNode(`${pos}`)
         var t_name = document.createTextNode(item["object_name"])
         
-        var a = document.createElement('a');
-        var linkText = document.createTextNode("LINK")
-        a.appendChild(linkText)
-        a.title = "LINK"
-        a.href = "http://bamboo/"+item["object_name"]
-        var t_link_bamboo = a
+        // var a = document.createElement('a');
+        // var linkText = document.createTextNode("LINK")
+        // a.appendChild(linkText)
+        // a.title = "LINK"
+        // a.href = "http://bamboo/"+item["object_name"]
+        // var t_link_bamboo = a
 
         var a = document.createElement('a');
         var linkText = document.createTextNode("LINK")
@@ -62,7 +62,7 @@ function showObjects() {
         td_check_eqz.appendChild(el_eqz_check)
         td_check_test_act.appendChild(el_test_act_check)
         td_check_test_prd.appendChild(el_test_prd_check)
-        td_link_bamboo.appendChild(t_link_bamboo)
+        //td_link_bamboo.appendChild(t_link_bamboo)
         td_link_git.appendChild(t_link_git)
 
         line.appendChild(td_id)
@@ -70,7 +70,7 @@ function showObjects() {
         line.appendChild(td_check_eqz)
         line.appendChild(td_check_test_act)
         line.appendChild(td_check_test_prd)
-        line.appendChild(td_link_bamboo)
+        //line.appendChild(td_link_bamboo)
         line.appendChild(td_link_git)
 
         line.setAttribute('onclick', `selectedObject(${pos})`)
