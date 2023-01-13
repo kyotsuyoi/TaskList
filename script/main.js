@@ -337,6 +337,7 @@ function clear(){
     lib.value = ''
     object_name.value = ''
     checklist_description.value = ''
+    textarea_notes.value = ''
 
     taskClear()
     libClear()

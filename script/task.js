@@ -94,6 +94,7 @@ function selectedTask(position){
     esim.value = item.esim
     test_eh.value = item.test_eh
     test_prd.value = item.test_prd
+    textarea_notes.value = item.textarea_notes
     
     id.innerText = position
     showLibs()
@@ -122,6 +123,7 @@ function addTask() {
     json_array["esim"] = esim.value
     json_array["test_eh"] = test_eh.value
     json_array["test_prd"] = test_prd.value
+    json_array["textarea_notes"] = textarea_notes.value
 
     json_array["lib_list"] = new Array()
     json_array["object_list"] = new Array()
@@ -157,7 +159,8 @@ function updateTask(){
     json_array["spid"] = spid.value
     json_array["esim"] = esim.value
     json_array["test_eh"] = test_eh.value
-    json_array["test_prd"] = test_prd.value
+    json_array["test_prd"] = test_prd.value    
+    json_array["textarea_notes"] = textarea_notes.value
 
     if(task_list[selected_position].lib_list == undefined){
         task_list[selected_position]['lib_list'] = new Array()
