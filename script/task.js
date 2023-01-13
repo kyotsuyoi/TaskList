@@ -98,6 +98,7 @@ function selectedTask(position){
     id.innerText = position
     showLibs()
     showObjects()
+    showChecklist()
 
     calculateProgress()
 }
@@ -124,6 +125,7 @@ function addTask() {
 
     json_array["lib_list"] = new Array()
     json_array["object_list"] = new Array()
+    json_array["checklist_list"] = new Array()
 
     task_list.push(json_array)
 
@@ -163,8 +165,12 @@ function updateTask(){
     if(task_list[selected_position].object_list == undefined){
         task_list[selected_position]['object_list'] = new Array()
     }
+    if(task_list[selected_position].checklist_list == undefined){
+        task_list[selected_position]['checklist_list'] = new Array()
+    }
     json_array["lib_list"] = task_list[selected_position].lib_list
     json_array["object_list"] = task_list[selected_position].object_list
+    json_array["checklist_list"] = task_list[selected_position].checklist_list
 
     task_list[selected_position] = json_array
 

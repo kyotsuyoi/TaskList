@@ -133,7 +133,6 @@ function addObject() {
     object_name.value = ''
 
     showObjects()
-    LocalStorageSave(2)
     calculateProgress()
 }
 
@@ -144,7 +143,6 @@ function deleteObject() {
     }
 
     task.object_list.splice(selected_object_position, 1)
-    LocalStorageSave(2)
     showObjects()
 
     selected_object_position = -1
@@ -165,7 +163,6 @@ function checkObjectEqz(position){
     }
 
     task.object_list[position] = item
-    LocalStorageSave(2)
 
     calculateProgress()
 }
@@ -182,7 +179,6 @@ function checkObjectTestACT(position){
     }
 
     task.object_list[position] = item
-    LocalStorageSave(2)
 
     calculateProgress()
 }
@@ -199,7 +195,6 @@ function checkObjectTestPRD(position){
     }
 
     task.object_list[position] = item
-    LocalStorageSave(2)
 
     calculateProgress()
 }

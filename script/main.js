@@ -13,6 +13,8 @@ var object_name = document.getElementById('object_name')
 
 const div_liberations = document.getElementById('div_liberations')
 const div_objects = document.getElementById('div_objects')
+const div_checklist = document.getElementById('div_checklist')
+
 const combobox_month = document.getElementById('combobox_month')
 
 var selected_month = JSON.parse(window.localStorage.getItem('selected_month'))
@@ -33,6 +35,14 @@ function buttonHideObjects(){
         div_objects.style.display = 'inline'
     }else{
         div_objects.style.display = 'none'
+    }
+}
+
+function buttonHideChecklist(){
+    if (div_checklist.style.display === "none") {
+        div_checklist.style.display = 'inline'
+    }else{
+        div_checklist.style.display = 'none'
     }
 }
 
@@ -147,6 +157,8 @@ function calc(item){
     var score_object_eqz = 0
     var score_object_test_act = 0
     var score_object_test_prd = 0
+    
+    var score_checklist_check = 0
 
     if(item.sm != null && item.sm != undefined && item.sm != ''){
         score_sm = 1
@@ -182,10 +194,10 @@ function calc(item){
             }
         })
         score_lib_ev_anex = (score_lib_ev_anex * 100 / item.lib_list.length)
-        score_lib_ev_anex = score_lib_ev_anex*0.13
+        score_lib_ev_anex = score_lib_ev_anex*0.10
 
         score_lib_mont_ok = (score_lib_mont_ok * 100 / item.lib_list.length)
-        score_lib_mont_ok = score_lib_mont_ok*0.1
+        score_lib_mont_ok = score_lib_mont_ok*0.10
     } 
 
     if((item.object_list != null && item.object_list != undefined && item.object_list != '') && item.object_list.length > 0){
@@ -204,15 +216,27 @@ function calc(item){
         score_object_eqz = score_object_eqz*0.3
 
         score_object_test_act = (score_object_test_act * 100 / item.object_list.length)
-        score_object_test_act = score_object_test_act*0.2
+        score_object_test_act = score_object_test_act*0.17
 
         score_object_test_prd = (score_object_test_prd * 100 / item.object_list.length)
-        score_object_test_prd = score_object_test_prd*0.2
+        score_object_test_prd = score_object_test_prd*0.17
     } 
+
+    if((item.checklist_list != null && item.checklist_list != undefined && item.checklist_list != '') && item.checklist_list.length > 0){
+        item.checklist_list.forEach(item => {
+            if(item.check){
+                score_checklist_check++
+            }
+        })
+        score_checklist_check = (score_checklist_check * 100 / item.checklist_list.length)
+        score_checklist_check = score_checklist_check*0.09
+    }else{
+        score_checklist_check = 9
+    }
 
     var score_total = score_sm + score_description + score_spid + score_esim + score_test_eh + score_test_prd + 
     score_lib_ev_anex + score_lib_mont_ok +
-    score_object_eqz + score_object_test_act + score_object_test_prd 
+    score_object_eqz + score_object_test_act + score_object_test_prd + score_checklist_check
 
     return score_total
 }
@@ -312,14 +336,15 @@ function clear(){
     test_prd.value = ''
     lib.value = ''
     object_name.value = ''
+    checklist_description.value = ''
 
     taskClear()
     libClear()
     objectClear()
+    clearChecklist()
 
     var elem = document.getElementById("myBar")
     var width = 0
     elem.style.width = width + "%"
-    elem.innerHTML = width + "%"      
-    
+    elem.innerHTML = width + "%"  
 }
