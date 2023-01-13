@@ -13,8 +13,12 @@ var object_name = document.getElementById('object_name')
 
 const div_liberations = document.getElementById('div_liberations')
 const div_objects = document.getElementById('div_objects')
+const combobox_month = document.getElementById('combobox_month')
 
-showTasks()
+var selected_month = JSON.parse(window.localStorage.getItem('selected_month'))
+
+//showTasks()
+setComboMonthOptions()
 
 function buttonHideLib(){
     if (div_liberations.style.display === "none") {
@@ -35,11 +39,7 @@ function buttonHideObjects(){
 function LocalStorageSave(action) {
     switch (action){
         case 1:
-            window.localStorage.setItem('temp_lib_list', JSON.stringify(temp_lib_list))
-        break
-
-        case 2:
-            window.localStorage.setItem('temp_object_list', JSON.stringify(temp_object_list))
+            window.localStorage.setItem('selected_month', JSON.stringify(selected_month))
         break
 
         default: //save all
@@ -133,6 +133,7 @@ function calculateTaskProgress(p_selected_position){
 }
 
 function calc(item){
+    if(item == undefined) return 0
     var score_sm = 0
     var score_description = 0
     var score_spid = 0
@@ -214,4 +215,111 @@ function calc(item){
     score_object_eqz + score_object_test_act + score_object_test_prd 
 
     return score_total
+}
+
+function buttonCopyInfo(){
+    var text = ''
+    var text_temp = sm.value
+    text = sm.value + ' - ' + description.value
+    sm.value = text
+    sm.select()
+    document.execCommand('copy')
+    sm.value = text_temp
+}
+
+function setComboMonthOptions(){
+    var JAN = document.createElement('option')
+    JAN.text = 'JAN'
+    JAN.value = 'JAN'
+    combobox_month.add(JAN)
+
+    var FEV = document.createElement('option')
+    FEV.text = 'FEV'
+    FEV.value = 'FEV'
+    combobox_month.add(FEV)
+
+    var MAR = document.createElement('option')
+    MAR.text = 'MAR'
+    MAR.value = 'MAR'
+    combobox_month.add(MAR)
+
+    var ABR = document.createElement('option')
+    ABR.text = 'ABR'
+    ABR.value = 'ABR'
+    combobox_month.add(ABR)
+
+    var MAI = document.createElement('option')
+    MAI.text = 'MAI'
+    MAI.value = 'MAI'
+    combobox_month.add(MAI)
+
+    var JUN = document.createElement('option')
+    JUN.text = 'JUN'
+    JUN.value = 'JUN'
+    combobox_month.add(JUN)
+
+    var JUL = document.createElement('option')
+    JUL.text = 'JUL'
+    JUL.value = 'JUL'
+    combobox_month.add(JUL)
+
+    var AGO = document.createElement('option')
+    AGO.text = 'AGO'
+    AGO.value = 'AGO'
+    combobox_month.add(AGO)
+
+    var SET = document.createElement('option')
+    SET.text = 'SET'
+    SET.value = 'SET'
+    combobox_month.add(SET)
+
+    var OUT = document.createElement('option')
+    OUT.text = 'OUT'
+    OUT.value = 'OUT'
+    combobox_month.add(OUT)
+
+    var NOV = document.createElement('option')
+    NOV.text = 'NOV'
+    NOV.value = 'NOV'
+    combobox_month.add(NOV)
+
+    var DEZ = document.createElement('option')
+    DEZ.text = 'DEZ'
+    DEZ.value = 'DEZ'
+    combobox_month.add(DEZ)
+
+    if(selected_month){        
+        combobox_month.value = selected_month
+        showTasks()
+    }
+}
+
+function monthSelectedChange(){
+    selected_month = combobox_month.options[combobox_month.selectedIndex].text
+    clear()
+    showTasks()
+    
+    LocalStorageSave(1)
+}
+
+function clear(){
+    id.value = ""
+    sm.value = ''
+    description.value = ''
+    spid.value = ''
+    esim.value = ''
+    test_eh.value = ''
+    test_prd.value = ''
+    lib.value = ''
+    object_name.value = ''
+
+    taskClear()
+    libClear()
+    objectClear()
+
+    var elem = document.getElementById("myBar")
+    var width = 0
+    elem.style.width = width + "%"
+    elem.innerHTML = width + "%"      
+    
 }

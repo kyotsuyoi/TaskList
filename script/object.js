@@ -1,17 +1,18 @@
 const table_object_body = document.getElementById('table_object_body')
-var temp_object_list = new Array()
 var selected_object_position = -1
 
 function showObjects() {
 
+    var task = task_list[selected_position]
+
     table_object_body.innerHTML = ''
-    if (temp_object_list == null) {
-        temp_object_list = new Array()
+    if (task.object_list == null) {
+        task.object_list = new Array()
         return
     }
 
-    temp_object_list.forEach(item => {
-        const pos = temp_object_list.indexOf(item)
+    task.object_list.forEach(item => {
+        const pos = task.object_list.indexOf(item)
 
         var line = document.createElement("tr")
         var td_id = document.createElement("td")
@@ -102,7 +103,8 @@ function showObjects() {
 }
 
 function selectedObject(position){
-    var item = temp_object_list[position]
+    var task = task_list[selected_position]
+    var item = task.object_list[position]
 
     selected_object_position = position
 
@@ -115,8 +117,9 @@ function addObject() {
         return
     }  
 
-    if (temp_object_list == null) {
-        temp_object_list = new Array()
+    var task = task_list[selected_position]
+    if (task.object_list == null) {
+        task.object_list = new Array()
     }
     
     json_array = {}
@@ -125,7 +128,7 @@ function addObject() {
     json_array["check_test_act"] = false
     json_array["check_test_prd"] = false
 
-    temp_object_list.push(json_array)
+    task.object_list.push(json_array)
 
     object_name.value = ''
 
@@ -135,11 +138,12 @@ function addObject() {
 }
 
 function deleteObject() {
-    if (selected_object_position == -1 || selected_object_position > temp_object_list.length-1) {
+    var task = task_list[selected_position]
+    if (selected_object_position == -1 || selected_object_position > task.object_list.length-1) {
         return
     }
 
-    temp_object_list.splice(selected_object_position, 1)
+    task.object_list.splice(selected_object_position, 1)
     LocalStorageSave(2)
     showObjects()
 
@@ -150,7 +154,8 @@ function deleteObject() {
 }
 
 function checkObjectEqz(position){
-    var item = temp_object_list[position]
+    var task = task_list[selected_position]
+    var item = task.object_list[position]
 
     var checked = item.check_eqz  
     if(checked){
@@ -159,14 +164,15 @@ function checkObjectEqz(position){
         item.check_eqz = true
     }
 
-    temp_object_list[position] = item
+    task.object_list[position] = item
     LocalStorageSave(2)
 
     calculateProgress()
 }
 
 function checkObjectTestACT(position){
-    var item = temp_object_list[position]
+    var task = task_list[selected_position]
+    var item = task.object_list[position]
 
     var checked = item.check_test_act  
     if(checked){
@@ -175,14 +181,15 @@ function checkObjectTestACT(position){
         item.check_test_act = true
     }
 
-    temp_object_list[position] = item
+    task.object_list[position] = item
     LocalStorageSave(2)
 
     calculateProgress()
 }
 
 function checkObjectTestPRD(position){
-    var item = temp_object_list[position]
+    var task = task_list[selected_position]
+    var item = task.object_list[position]
 
     var checked = item.check_test_prd  
     if(checked){
@@ -191,8 +198,13 @@ function checkObjectTestPRD(position){
         item.check_test_prd = true
     }
 
-    temp_object_list[position] = item
+    task.object_list[position] = item
     LocalStorageSave(2)
 
     calculateProgress()
+}
+
+function objectClear(){
+    table_object_body.innerHTML = ''    
+    selected_object_position = -1
 }

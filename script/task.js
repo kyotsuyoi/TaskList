@@ -3,6 +3,7 @@ var task_list = JSON.parse(window.localStorage.getItem('list_tarefas'))
 var selected_position = -1
 
 function showTasks() {
+    if (selected_month == '') return
 
     table_body.innerHTML = ''
     if (task_list == null) {
@@ -11,6 +12,14 @@ function showTasks() {
     }
 
     task_list.forEach(item => {
+
+        if(item['month'] == undefined){
+            alert('Item '+ item.sm + ' sem mês definido, inserindo o mês ' + selected_month + ' (necessário salvar)')
+            item['month'] = selected_month
+        }
+
+        if(item.month != selected_month) return
+
         const pos = task_list.indexOf(item)
 
         var line = document.createElement("tr")
@@ -68,10 +77,13 @@ function showTasks() {
         line.setAttribute('onclick', `selectedTask(${pos})`)
 
         table_body.appendChild(line)
+
+        item=undefined
     })
 }
 
 function selectedTask(position){
+    clear()
     var item = task_list[position]
 
     selected_position = position
@@ -83,12 +95,6 @@ function selectedTask(position){
     test_eh.value = item.test_eh
     test_prd.value = item.test_prd
     
-    temp_lib_list = item.lib_list
-    temp_object_list = item.object_list
-
-    LocalStorageSave(1)
-    LocalStorageSave(2)
-
     id.innerText = position
     showLibs()
     showObjects()
@@ -98,11 +104,17 @@ function selectedTask(position){
 
 function addTask() {
     if (sm.value == "" || description.value == ""){
-        alert("Insira o número e descrição da SM")
+        alert("Insira o número e descrição da SM/Chamado")
         return
     }    
 
+    if(selected_month == ''){
+        alert("Selecione o mês")
+        return
+    }
+
     json_array = {}
+    json_array["month"] = selected_month
     json_array["sm"] = sm.value
     json_array["description"] = description.value
     json_array["spid"] = spid.value
@@ -110,20 +122,12 @@ function addTask() {
     json_array["test_eh"] = test_eh.value
     json_array["test_prd"] = test_prd.value
 
-    json_array["lib_list"] = temp_lib_list
-    json_array["object_list"] = temp_object_list
+    json_array["lib_list"] = new Array()
+    json_array["object_list"] = new Array()
 
     task_list.push(json_array)
 
-    id.value = ""
-    sm.value = ''
-    description.value = ''
-    spid.value = ''
-    esim.value = ''
-    test_eh.value = ''
-    test_prd.value = ''
-    lib.value = ''
-    object_name.value = ''
+    clear()
 
     showTasks()
     LocalStorageSave()
@@ -131,15 +135,21 @@ function addTask() {
 
 function updateTask(){
     if (sm.value == "" || description.value == ""){
-        alert("Insira o número e descrição da SM")
+        alert("Insira o número e descrição da SM/Chamado")
         return
     }  
+
+    if(selected_month == ''){
+        alert("Selecione o mês")
+        return
+    }
 
     if (selected_position == -1) {
         return
     }
 
     json_array = {}
+    json_array["month"] = selected_month
     json_array["sm"] = sm.value
     json_array["description"] = description.value
     json_array["spid"] = spid.value
@@ -147,8 +157,14 @@ function updateTask(){
     json_array["test_eh"] = test_eh.value
     json_array["test_prd"] = test_prd.value
 
-    json_array["lib_list"] = temp_lib_list
-    json_array["object_list"] = temp_object_list
+    if(task_list[selected_position].lib_list == undefined){
+        task_list[selected_position]['lib_list'] = new Array()
+    }
+    if(task_list[selected_position].object_list == undefined){
+        task_list[selected_position]['object_list'] = new Array()
+    }
+    json_array["lib_list"] = task_list[selected_position].lib_list
+    json_array["object_list"] = task_list[selected_position].object_list
 
     task_list[selected_position] = json_array
 
@@ -166,24 +182,14 @@ function deleteTask() {
 
     task_list.splice(selected_position, 1)
 
-    selected_position = -1
-    selected_lib_position = -1
-    selected_object_position = -1
-
-    temp_lib_list = new Array()
-    temp_object_list = new Array()
-
-    id.innerText = ""
-    sm.value = ''
-    description.value = ''
-    spid.value = ''
-    esim.value = ''
-    lib.value = ''
-    lib.value = ''
-    object_name.value = ''
+    clear()
     
     LocalStorageSave()
     showTasks()
 
     alert('Tarefa removida')
+}
+
+function taskClear(){
+    selected_position = -1
 }

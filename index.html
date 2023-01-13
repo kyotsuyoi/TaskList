@@ -16,7 +16,11 @@
         <div class="input-button">
 
             <div>
+                
                 <label for="task_list" class="label">ID</label>
+                <select id="combobox_month" onChange="monthSelectedChange()" style="float: right;">
+                    <option value=""></option>
+                </select>
                 <label for="task_list" id="id" class="label"></label>
                 <div id="myProgress">
                     <div id="myBar">0%</div>
@@ -24,13 +28,14 @@
                 </br>
             </div> 
 
-            <div>
-                <label for="task_list" class="label">Número da SM</label>
-                <input type="text" id="sm" class="textbox">
+            <div>                
+                <label for="task_list" class="label">N° SM/Chamado</label>                  
+                <button onclick="buttonCopyInfo()"></button>   
+                <input type="text" id="sm" class="textbox">                
             </div> 
         
             <div>
-                <label for="task_list" class="label">Nome da SM</label>
+                <label for="task_list" class="label">Descrição</label>
                 <input type="text" id="description" class="textbox">
             </div>
         
@@ -112,7 +117,7 @@
             <div id="command_buttons">
                 <img src="src/save_icon.svg" onclick="addTask()" class="button">
                 <img src="src/update_icon.svg" onclick="updateTask()" class="button">
-                <img src="src/delete_icon.svg" onclick="deleteTask()" class="button">
+                <img src="src/delete_icon.svg" onclick="deleteTask()" class="button">                
             </div>            
 
         </div>
@@ -135,13 +140,12 @@
 
             <tbody id="table_body"></tbody>
         </table>
-
-        <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
-        <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->
         <br>
+        <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
+        <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->  
+        <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button_very_small">      
         <pre id="output"></pre>
-        <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button">
-
+        
     </div>
 
     <script src="script/object.js"></script>

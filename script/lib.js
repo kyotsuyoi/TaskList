@@ -1,17 +1,18 @@
 const table_lib_body = document.getElementById('table_lib_body')
-var temp_lib_list = new Array()
 var selected_lib_position = -1
 
 function showLibs() {
 
+    var task = task_list[selected_position]
+
     table_lib_body.innerHTML = ''
-    if (temp_lib_list == null) {
-        temp_lib_list = new Array()
+    if (task.lib_list == null) {
+        task.lib_list = new Array()
         return
     }
 
-    temp_lib_list.forEach(item => {
-        const pos = temp_lib_list.indexOf(item)
+    task.lib_list.forEach(item => {
+        const pos = task.lib_list.indexOf(item)
 
         var line = document.createElement("tr")
         var td_id = document.createElement("td")
@@ -63,7 +64,8 @@ function showLibs() {
 }
 
 function selectedLib(position){
-    var item = temp_lib_list[position]
+    var task = task_list[selected_position]
+    var item = task.lib_list[position]
 
     selected_lib_position = position
 
@@ -74,10 +76,11 @@ function addLib() {
     if (lib.value == ""){
         alert("Insira o número da liberação")
         return
-    }  
-
-    if (temp_lib_list == null) {
-        temp_lib_list = new Array()
+    } 
+    
+    var task = task_list[selected_position]
+    if (task.lib_list == null) {
+        task.lib_list = new Array()
     }
     
     json_array = {}
@@ -85,26 +88,24 @@ function addLib() {
     json_array["check_ev_anex"] = false
     json_array["check_mont_ok"] = false
 
-    temp_lib_list.push(json_array)
+    task.lib_list.push(json_array)
 
     lib.value = ''
 
     showLibs()
-    LocalStorageSave(1)
+    LocalStorageSave()
     calculateProgress()
 }
 
 function deleteLib() {
-    // temp_lib_list = null
-    // LocalStorageSave(1)
-    // return
+    var task = task_list[selected_position]
 
-    if (selected_lib_position == -1 || selected_lib_position > temp_lib_list.length-1) {
+    if (selected_lib_position == -1 || selected_lib_position > task.lib_list.length-1) {
         return
     }
 
-    temp_lib_list.splice(selected_lib_position, 1)
-    LocalStorageSave(1)
+    task.lib_list.splice(selected_lib_position, 1)
+    LocalStorageSave()
     showLibs()
 
     selected_lib_position = -1
@@ -114,7 +115,8 @@ function deleteLib() {
 }
 
 function checkLibEvAnex(position){
-    var item = temp_lib_list[position]
+    var task = task_list[selected_position]
+    var item = task.lib_list[position]
 
     var checked = item.check_ev_anex  
     if(checked){
@@ -123,14 +125,15 @@ function checkLibEvAnex(position){
         item.check_ev_anex = true
     }
 
-    temp_lib_list[position] = item
-    LocalStorageSave(1)
+    task.lib_list[position] = item
+    LocalStorageSave()
 
     calculateProgress()
 }
 
 function checkLibMontOK(position){
-    var item = temp_lib_list[position]
+    var task = task_list[selected_position]
+    var item = task.lib_list[position]
 
     var checked = item.check_mont_ok  
     if(checked){
@@ -139,8 +142,13 @@ function checkLibMontOK(position){
         item.check_mont_ok = true
     }
 
-    temp_lib_list[position] = item
-    LocalStorageSave(1)
+    task.lib_list[position] = item
+    LocalStorageSave()
 
     calculateProgress()
+}
+
+function libClear(){
+    table_lib_body.innerHTML = ''
+    selected_lib_position = -1
 }
