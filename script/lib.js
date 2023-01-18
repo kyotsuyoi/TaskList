@@ -104,8 +104,8 @@ function addLib() {
     LocalStorageSave()
 }
 
-function updateObject() {
-    if (object_name.value == ""){
+function updateLib() {
+    if (lib.value == ""){
         alert("Insira o número da liberação")
         return
     }     
@@ -125,14 +125,14 @@ function updateObject() {
     
     json_array = {}
     json_array["num"] = lib.value
-    json_array["check_ev_anex"] = task_list[selected_position].lib_list[selected_object_position].check_ev_anex
-    json_array["check_mont_ok"] = task_list[selected_position].lib_list[selected_object_position].check_mont_ok
+    json_array["check_ev_anex"] = task_list[selected_position].lib_list[selected_lib_position].check_ev_anex
+    json_array["check_mont_ok"] = task_list[selected_position].lib_list[selected_lib_position].check_mont_ok
 
-    task_list[selected_position].lib_list[selected_object_position] = json_array
+    task_list[selected_position].lib_list[selected_lib_position] = json_array
 
     checklist_description.value = ''
 
-    showObjects()
+    showLibs()
     calculateProgress()
     LocalStorageSave()
 }
