@@ -12,15 +12,18 @@ function showTasks() {
     }
 
     task_list.forEach(item => {
+        
+        const pos = task_list.indexOf(item)
 
         if(item['month'] == undefined){
-            alert('Item '+ item.sm + ' sem mês definido, inserindo o mês ' + selected_month + ' (necessário salvar)')
-            item['month'] = selected_month
+            alert('Item '+ item.sm + ' sem mês definido, inserindo ao mês ' + selected_month)
+            //item['month'] = selected_month
+            task_list[pos]['month'] = selected_month            
+            LocalStorageSave()
         }
 
         if(item.month != selected_month) return
 
-        const pos = task_list.indexOf(item)
 
         var line = document.createElement("tr")
         var td_id = document.createElement("td")
@@ -86,6 +89,7 @@ function selectedTask(position){
     clear()
     var item = task_list[position]
 
+    if (item == undefined) return
     selected_position = position
 
     sm.value = item.sm
@@ -152,6 +156,10 @@ function updateTask(){
         return
     }
 
+    if (!confirm('Deseja realmente alterar?')) {        
+        return
+    }
+
     json_array = {}
     json_array["month"] = selected_month
     json_array["sm"] = sm.value
@@ -180,12 +188,14 @@ function updateTask(){
     showTasks()
     LocalStorageSave()
     calculateProgress()
-    
-    alert('Tarefa alterada')
 }
 
 function deleteTask() {
     if (selected_position == -1 || selected_position > task_list.length-1) {
+        return
+    }
+
+    if (!confirm('Deseja realmente remover a tarefa (ID: '+selected_position+')?')) {        
         return
     }
 
@@ -195,8 +205,42 @@ function deleteTask() {
     
     LocalStorageSave()
     showTasks()
+}
 
-    alert('Tarefa removida')
+function upTask() {
+    if (selected_position < 0 || selected_position == undefined) {
+        return
+    }
+
+    var json_months = getNextAndPreviousMonth(selected_month)
+    if(json_months.previous == undefined) return
+    if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o mês anterior ('+ json_months.previous +')?')) {        
+        return
+    }
+
+    task_list[selected_position].month = json_months.previous
+    clear()
+    calculateProgress()
+    LocalStorageSave()
+    showTasks()
+}
+
+function downTask() {
+    if (selected_position < 0 || selected_position == undefined) {
+        return
+    }
+
+    var json_months = getNextAndPreviousMonth(selected_month)
+    if(json_months.next == undefined) return
+    if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o próximo mês ('+ json_months.next +')?')) {        
+        return
+    }
+
+    task_list[selected_position].month = json_months.next
+    clear()
+    calculateProgress()
+    LocalStorageSave()
+    showTasks()
 }
 
 function taskClear(){

@@ -119,10 +119,10 @@ function updateProgress(value) {
     i = 1
     var elem = document.getElementById("myBar")
     var width = 0
-    var id = setInterval(frame, 10)
+    var v_id = setInterval(frame, 10)
     function frame() {
         if (width >= value) {
-            clearInterval(id)
+            clearInterval(v_id)
             i = 0
         } else {
             width++
@@ -326,8 +326,79 @@ function monthSelectedChange(){
     LocalStorageSave(1)
 }
 
+function getNextAndPreviousMonth(month){
+    var json_months = {}
+    switch (month){
+        case 'JAN':
+            json_months['previous'] = undefined
+            json_months['next'] = 'FEV'
+        break
+
+        case 'FEV':
+            json_months['previous'] = 'JAN'
+            json_months['next'] = 'MAR'
+        break
+
+        case 'MAR':
+            json_months['previous'] = 'FEV'
+            json_months['next'] = 'ABR'
+        break
+
+        case 'ABR':
+            json_months['previous'] = 'MAR'
+            json_months['next'] = 'MAI'
+        break
+
+        case 'MAI':
+            json_months['previous'] = 'ABR'
+            json_months['next'] = 'JUN'
+        break
+
+        case 'JUN':
+            json_months['previous'] = 'MAI'
+            json_months['next'] = 'JUL'
+        break
+
+        case 'JUL':
+            json_months['previous'] = 'JUN'
+            json_months['next'] = 'AGO'
+        break
+
+        case 'AGO':
+            json_months['previous'] = 'JUL'
+            json_months['next'] = 'SET'
+        break
+
+        case 'SET':
+            json_months['previous'] = 'AGO'
+            json_months['next'] = 'OUT'
+        break
+
+        case 'OUT':
+            json_months['previous'] = 'SET'
+            json_months['next'] = 'NOV'
+        break
+
+        case 'NOV':
+            json_months['previous'] = 'OUT'
+            json_months['next'] = 'DEZ'
+        break
+
+        case 'DEZ':
+            json_months['previous'] = 'NOV'
+            json_months['next'] = undefined
+        break
+
+        default: 
+            json_months['previous'] = undefined
+            json_months['next'] = undefined
+    }
+
+    return json_months
+}
+
 function clear(){
-    id.value = ""
+    id.innerText = ''
     sm.value = ''
     description.value = ''
     spid.value = ''

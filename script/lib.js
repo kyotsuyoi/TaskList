@@ -20,6 +20,7 @@ function showLibs() {
         var td_ev_anex = document.createElement("td")
         var td_mont_ok = document.createElement("td")
         var td_link = document.createElement("td")
+        var td_delete = document.createElement("td")
 
         var t_id = document.createTextNode(`${pos}`)
         var t_num = document.createTextNode(item["num"])
@@ -43,19 +44,25 @@ function showLibs() {
         el_mont_ok_check.setAttribute('onclick', `checkLibMontOK(${pos})`)
         el_mont_ok_check.checked = check_mont_ok 
         
-        //checkLibMontOK check_mont_ok
+        var el_checklist_delete = document.createElement("img")
+        el_checklist_delete.setAttribute("type", "img")
+        el_checklist_delete.setAttribute("src", "src/delete_icon.svg")
+        el_checklist_delete.setAttribute('onclick', `deleteLib(${pos})`)
+        el_checklist_delete.setAttribute('class', 'button_very_small')
 
         td_id.appendChild(t_id)
         td_num.appendChild(t_num)
         td_ev_anex.appendChild(el_ev_anex_check)
         td_mont_ok.appendChild(el_mont_ok_check)
         td_link.appendChild(t_link)
+        td_delete.appendChild(el_checklist_delete)
 
         line.appendChild(td_id)
         line.appendChild(td_num)
         line.appendChild(td_ev_anex)
         line.appendChild(td_mont_ok)
         line.appendChild(td_link)
+        line.appendChild(td_delete)
 
         line.setAttribute('onclick', `selectedLib(${pos})`)
 
@@ -67,8 +74,8 @@ function selectedLib(position){
     var task = task_list[selected_position]
     var item = task.lib_list[position]
 
+    if (item == undefined) return
     selected_lib_position = position
-
     lib.value = item.num  
 }
 
@@ -93,25 +100,63 @@ function addLib() {
     lib.value = ''
 
     showLibs()
-    LocalStorageSave()
     calculateProgress()
+    LocalStorageSave()
 }
 
-function deleteLib() {
-    var task = task_list[selected_position]
+function updateObject() {
+    if (object_name.value == ""){
+        alert("Insira o número da liberação")
+        return
+    }     
 
-    if (selected_lib_position == -1 || selected_lib_position > task.lib_list.length-1) {
+    if (selected_lib_position == -1) {
         return
     }
 
-    task.lib_list.splice(selected_lib_position, 1)
+    if (!confirm('Deseja realmente alterar?')) {        
+        return
+    }
+
+    var task = task_list[selected_position]
+    if (task.lib_list == null) {
+        task.lib_list = new Array()
+    }
+    
+    json_array = {}
+    json_array["num"] = lib.value
+    json_array["check_ev_anex"] = task_list[selected_position].lib_list[selected_object_position].check_ev_anex
+    json_array["check_mont_ok"] = task_list[selected_position].lib_list[selected_object_position].check_mont_ok
+
+    task_list[selected_position].lib_list[selected_object_position] = json_array
+
+    checklist_description.value = ''
+
+    showObjects()
+    calculateProgress()
+    LocalStorageSave()
+}
+
+function deleteLib(inner_position) {
+    var task = task_list[selected_position]
+
+    if (inner_position == -1 || inner_position > task.lib_list.length-1) {
+        return
+    }
+
+    if (!confirm('Deseja realmente remover a liberação (ID: '+inner_position+')?')) {        
+        return
+    }
+
+    task.lib_list.splice(inner_position, 1)
     LocalStorageSave()
     showLibs()
 
-    selected_lib_position = -1
+    inner_position = -1
 
     lib.value = ''
     calculateProgress()
+    LocalStorageSave()
 }
 
 function checkLibEvAnex(position){
@@ -126,9 +171,9 @@ function checkLibEvAnex(position){
     }
 
     task.lib_list[position] = item
-    LocalStorageSave()
 
     calculateProgress()
+    LocalStorageSave()
 }
 
 function checkLibMontOK(position){
@@ -143,9 +188,9 @@ function checkLibMontOK(position){
     }
 
     task.lib_list[position] = item
-    LocalStorageSave()
 
     calculateProgress()
+    LocalStorageSave()
 }
 
 function libClear(){

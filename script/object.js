@@ -22,6 +22,7 @@ function showObjects() {
         var td_check_test_prd = document.createElement("td")
         var td_link_bamboo = document.createElement("td")
         var td_link_git = document.createElement("td")
+        var td_delete = document.createElement("td")
         
         var s_description = item["object_name"]
         var isTFSFile = false
@@ -78,7 +79,13 @@ function showObjects() {
         var el_test_prd_check = document.createElement("INPUT")
         el_test_prd_check.setAttribute("type", "checkbox")
         el_test_prd_check.setAttribute('onclick', `checkObjectTestPRD(${pos})`)
-        el_test_prd_check.checked = check_test_prd        
+        el_test_prd_check.checked = check_test_prd   
+        
+        var el_object_delete = document.createElement("img")
+        el_object_delete.setAttribute("type", "img")
+        el_object_delete.setAttribute("src", "src/delete_icon.svg")
+        el_object_delete.setAttribute('onclick', `deleteObject(${pos})`)
+        el_object_delete.setAttribute('class', 'button_very_small')
 
         td_id.appendChild(t_id)
         td_name.appendChild(t_name)
@@ -87,6 +94,7 @@ function showObjects() {
         td_check_test_prd.appendChild(el_test_prd_check)
         //td_link_bamboo.appendChild(t_link_bamboo)
         td_link_git.appendChild(t_link_git)
+        td_delete.appendChild(el_object_delete)
 
         line.appendChild(td_id)
         line.appendChild(td_name)
@@ -94,7 +102,8 @@ function showObjects() {
         line.appendChild(td_check_test_act)
         line.appendChild(td_check_test_prd)
         //line.appendChild(td_link_bamboo)
-        line.appendChild(td_link_git)        
+        line.appendChild(td_link_git)  
+        line.appendChild(td_delete)        
 
         line.setAttribute('onclick', `selectedObject(${pos})`)
 
@@ -106,8 +115,8 @@ function selectedObject(position){
     var task = task_list[selected_position]
     var item = task.object_list[position]
 
+    if (item == undefined) return
     selected_object_position = position
-
     object_name.value = item.object_name  
 }
 
@@ -134,21 +143,61 @@ function addObject() {
 
     showObjects()
     calculateProgress()
+    LocalStorageSave()
 }
 
-function deleteObject() {
-    var task = task_list[selected_position]
-    if (selected_object_position == -1 || selected_object_position > task.object_list.length-1) {
+function updateObject() {
+    if (object_name.value == ""){
+        alert("Insira o nome do objeto/aplicação")
+        return
+    }     
+
+    if (selected_object_position == -1) {
         return
     }
 
-    task.object_list.splice(selected_object_position, 1)
+    if (!confirm('Deseja realmente alterar?')) {        
+        return
+    }
+
+    var task = task_list[selected_position]
+    if (task.object_list == null) {
+        task.object_list = new Array()
+    }
+    
+    json_array = {}
+    json_array["object_name"] = object_name.value
+    json_array["check_eqz"] = task_list[selected_position].object_list[selected_object_position].check_eqz
+    json_array["check_test_act"] = task_list[selected_position].object_list[selected_object_position].check_test_act
+    json_array["check_test_prd"] = task_list[selected_position].object_list[selected_object_position].check_test_prd
+
+    task_list[selected_position].object_list[selected_object_position] = json_array
+
+    checklist_description.value = ''
+
+    showObjects()
+    calculateProgress()
+    LocalStorageSave()
+}
+
+function deleteObject(inner_position) {
+    var task = task_list[selected_position]
+    if (inner_position == -1 || inner_position > task.object_list.length-1) {
+        return
+    }
+
+    if (!confirm('Deseja realmente remover o objeto (ID: '+inner_position+')?')) {        
+        return
+    }
+
+    task.object_list.splice(inner_position, 1)
     showObjects()
 
-    selected_object_position = -1
+    inner_position = -1
 
     lib.value = ''
     calculateProgress()
+    LocalStorageSave()
 }
 
 function checkObjectEqz(position){
@@ -165,6 +214,7 @@ function checkObjectEqz(position){
     task.object_list[position] = item
 
     calculateProgress()
+    LocalStorageSave()
 }
 
 function checkObjectTestACT(position){
@@ -181,6 +231,7 @@ function checkObjectTestACT(position){
     task.object_list[position] = item
 
     calculateProgress()
+    LocalStorageSave()
 }
 
 function checkObjectTestPRD(position){
@@ -197,6 +248,7 @@ function checkObjectTestPRD(position){
     task.object_list[position] = item
 
     calculateProgress()
+    LocalStorageSave()
 }
 
 function objectClear(){
