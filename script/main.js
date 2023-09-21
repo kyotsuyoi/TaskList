@@ -19,6 +19,7 @@ const combobox_month = document.getElementById('combobox_month')
 
 var selected_month = JSON.parse(window.localStorage.getItem('selected_month'))
 
+windowResize()
 //showTasks()
 setComboMonthOptions()
 
@@ -108,7 +109,7 @@ function onlyNumber(evt) {
 }
 
 function doubleDigit(number){
-    if (number < 9){
+    if (number <= 9){
         return "0"+number
     }else{
         return number
@@ -420,3 +421,39 @@ function clear(){
     elem.style.width = width + "%"
     elem.innerHTML = width + "%"  
 }
+
+function windowResize(){
+    var display = document.getElementById("window").style.display;
+
+    if(display == "none"){
+        document.getElementById("window").style.display = null     
+        document.getElementById("content").style.height = "initial"
+        document.getElementById("content").style.width = "initial"
+        document.getElementById("content").style.padding = "10px"
+        document.getElementById("button_window").src = "src/arrow-drop-up.svg"
+        document.getElementById("button_window").style.width = "30px"
+        document.getElementById("body").style.justifyContent = "center"
+        document.getElementById("label_window").style.float = "right"
+        document.getElementById("label_window").style.position = "initial"        
+    }else{
+        document.getElementById("window").style.display = "none"   
+        document.getElementById("content").style.height = "none"     
+        document.getElementById("content").style.width = "none"
+        document.getElementById("content").style.padding = "0px"
+        document.getElementById("button_window").src = "src/SF-Folder.png"
+        document.getElementById("button_window").style.width = "130px"
+        document.getElementById("body").style.justifyContent = "left"
+        document.getElementById("label_window").style.float = "none"
+        document.getElementById("label_window").style.position = "absolute"
+    }
+}
+
+var timeDisplay = document.getElementById("time");
+
+function refreshTime() {
+  var dateString = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+  var formattedString = dateString.replace(", ", " - ");
+  timeDisplay.innerHTML = formattedString;
+}
+
+setInterval(refreshTime, 1000);

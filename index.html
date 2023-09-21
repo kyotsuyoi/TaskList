@@ -9,184 +9,198 @@
     <link rel="stylesheet" type="text/css" href="css/style-progress.css" media="screen" />
 </head>
 
-<body id="body">
-    <div id="content">
+<body id="body" background="src/SF-BG.png">
+    
+    <div class="body">
+    
+        <div id="content">
+        
+        <div style="justify-content: center;">
+            <label id="label_window" class="label" style="position: initial; padding-left: 10px; float: right;">2023</label>
+            <img id="button_window" src="src/arrow-drop-up.svg" onclick="windowResize()" style="width: 30px;">
+        </div>
+        
+        <div id="window"> 
+            <!-- <h2 class="title">Lista de tarefas</h2> -->
+            <div class="input-button">
 
-        <!-- <h2 class="title">Lista de tarefas</h2> -->
+                <div>                
+                    <label for="task_list" class="label">ID</label>
+                    
+                    <select id="combobox_month" onChange="monthSelectedChange()" style="float: right;">
+                        <option value=""></option>
+                    </select>            
 
-        <div class="input-button">
+                    <label for="task_list" id="id" class="label"></label>
+                    <div id="myProgress">
+                        <div id="myBar">0%</div>
+                    </div>
+                    </br>
+                </div> 
 
-            <div>
-                
-                <label for="task_list" class="label">ID</label>
-                <select id="combobox_month" onChange="monthSelectedChange()" style="float: right;">
-                    <option value=""></option>
-                </select>
-                <label for="task_list" id="id" class="label"></label>
-                <div id="myProgress">
-                    <div id="myBar">0%</div>
+                <div>                
+                    <label for="task_list" class="label">N° SM/Chamado</label>                  
+                    <button onclick="buttonCopyInfo()"></button>   
+                    <input type="text" id="sm" class="textbox">                
+                </div> 
+            
+                <div>
+                    <label for="task_list" class="label">Descrição</label>
+                    <input type="text" id="description" class="textbox">
                 </div>
+            
+                <div>
+                    <label for="task_list" class="label">Share Point ID</label>
+                    <input type="text" id="spid" class="textbox" onkeypress="return onlyNumber();">
+                </div> 
+
+                <div>
+                    <label for="task_list" class="label">ESIM</label>
+                    <input type="text" id="esim" class="textbox" onkeypress="return onlyNumber();">
+                </div> 
+
+                <div>
+                    <label for="task_list" class="label">Teste EH</label>
+                    <input type="text" id="test_eh" class="textbox">
+                </div> 
+
+                <div>
+                    <label for="task_list" class="label">Teste PRD</label>
+                    <input type="text" id="test_prd" class="textbox">
+                </div> 
+
+                <label for="task_list" class="label">Liberações</label>
+                <button onclick="buttonHideLib()"></button>
+                <div id="div_liberations" style="display: none;">
+                    <input type="text" id="lib" class="textbox" onkeypress="return onlyNumber();">
+                    
+                    <div id="command_buttons">
+                        <img src="src/save_icon.svg" onclick="addLib()" class="button_small">               
+                        <img src="src/update_icon.svg" onclick="updateLib()" class="button_small">  
+                        <!-- <img src="src/delete_icon.svg" onclick="deleteLib()" class="button_small"> -->
+                    </div> 
+
+                    <table id='list_lib_table' class="list_table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Numero da Liberação</th>
+                                <th>Evidencia Anexada</th>
+                                <th>Montagem Concluída</th>
+                                <th>Link</th>
+                                <th style="width: 10px;"></th>
+                            <tr>
+                        </thead>
+            
+                        <tbody id="table_lib_body"></tbody>
+                    </table>
+                </div> 
+
                 </br>
-            </div> 
 
-            <div>                
-                <label for="task_list" class="label">N° SM/Chamado</label>                  
-                <button onclick="buttonCopyInfo()"></button>   
-                <input type="text" id="sm" class="textbox">                
-            </div> 
-        
-            <div>
-                <label for="task_list" class="label">Descrição</label>
-                <input type="text" id="description" class="textbox">
-            </div>
-        
-            <div>
-                <label for="task_list" class="label">Share Point ID</label>
-                <input type="text" id="spid" class="textbox" onkeypress="return onlyNumber();">
-            </div> 
+                <label for="task_list" class="label">Objetos</label>
+                <button onclick="buttonHideObjects()"></button>
+                <div id="div_objects" style="display: none;">                    
+                    <input type="text" id="object_name" class="textbox">
+                    <div id="command_buttons">
+                        <img src="src/save_icon.svg" onclick="addObject()" class="button_small">                   
+                        <img src="src/update_icon.svg" onclick="updateObject()" class="button_small">                    
+                        <!-- <img src="src/delete_icon.svg" onclick="deleteObject()" class="button_small"> -->
+                    </div> 
 
-            <div>
-                <label for="task_list" class="label">ESIM</label>
-                <input type="text" id="esim" class="textbox" onkeypress="return onlyNumber();">
-            </div> 
+                    <table id='list_object_table' class="list_table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome do objeto</th>
+                                <th>Equalizado</th>
+                                <th>Teste ACT</th>
+                                <th>Teste PRD</th>
+                                <!-- <th>Link Bamboo</th> -->
+                                <th>Link GitHub</th>
+                                <th style="width: 10px;"></th>
+                            <tr>
+                        </thead>
+            
+                        <tbody id="table_object_body"></tbody>
+                    </table>
+                </div>
 
-            <div>
-                <label for="task_list" class="label">Teste EH</label>
-                <input type="text" id="test_eh" class="textbox">
-            </div> 
+                </br>
 
-            <div>
-                <label for="task_list" class="label">Teste PRD</label>
-                <input type="text" id="test_prd" class="textbox">
-            </div> 
+                <label for="checklist_list" class="label">Check List</label>
+                <button onclick="buttonHideChecklist()"></button>
+                <div id="div_checklist" style="display: none;">                    
+                    <input type="text" id="checklist_description" class="textbox">
+                    <div id="command_buttons">
+                        <img src="src/save_icon.svg" onclick="addChecklist()" class="button_small">                  
+                        <img src="src/update_icon.svg" onclick="updateChecklist()" class="button_small">                 
+                        <!-- <img src="src/delete_icon.svg" onclick="deleteChecklist()" class="button_small"> -->
+                    </div> 
 
-            <label for="task_list" class="label">Liberações</label>
-            <button onclick="buttonHideLib()"></button>
-            <div id="div_liberations" style="display: none;">
-                <input type="text" id="lib" class="textbox" onkeypress="return onlyNumber();">
-                
+                    <table id='list_checklist_table' class="list_tableChecklist">
+                        <thead>
+                            <tr>
+                                <!-- <th>ID</th> -->
+                                <th></th>
+                                <th></th>
+                                <th style="width: 10px;"></th>
+                                <th style="width: 10px;"></th>
+                                <th style="width: 10px;"></th>
+                            <tr>
+                        </thead>
+            
+                        <tbody id="table_checklist_body"></tbody>
+                    </table>
+                </div>
+                <br>
+                <div>
+                    <textarea name="notes" id="textarea_notes" class="textarea"></textarea>
+                </div>
+
+                </br>
+
                 <div id="command_buttons">
-                    <img src="src/save_icon.svg" onclick="addLib()" class="button_small">               
-                    <img src="src/update_icon.svg" onclick="updateLib()" class="button_small">  
-                    <!-- <img src="src/delete_icon.svg" onclick="deleteLib()" class="button_small"> -->
-                </div> 
+                    <img src="src/save_icon.svg" onclick="addTask()" class="button">
+                    <img src="src/update_icon.svg" onclick="updateTask()" class="button">
+                    <img src="src/delete_icon.svg" onclick="deleteTask()" class="button">  
+                    
+                    <img src="src/button_month_up.svg" onclick="upTask()" class="button">
+                    <img src="src/button_month_down.svg" onclick="downTask()" class="button">              
+                </div>            
 
-                <table id='list_lib_table' class="list_table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Numero da Liberação</th>
-                            <th>Evidencia Anexada</th>
-                            <th>Montagem Concluída</th>
-                            <th>Link</th>
-                            <th style="width: 10px;"></th>
-                        <tr>
-                    </thead>
-        
-                    <tbody id="table_lib_body"></tbody>
-                </table>
-            </div> 
-
-            </br>
-
-            <label for="task_list" class="label">Objetos</label>
-            <button onclick="buttonHideObjects()"></button>
-            <div id="div_objects" style="display: none;">                    
-                <input type="text" id="object_name" class="textbox">
-                <div id="command_buttons">
-                    <img src="src/save_icon.svg" onclick="addObject()" class="button_small">                   
-                    <img src="src/update_icon.svg" onclick="updateObject()" class="button_small">                    
-                    <!-- <img src="src/delete_icon.svg" onclick="deleteObject()" class="button_small"> -->
-                </div> 
-
-                <table id='list_object_table' class="list_table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome do objeto</th>
-                            <th>Equalizado</th>
-                            <th>Teste ACT</th>
-                            <th>Teste PRD</th>
-                            <!-- <th>Link Bamboo</th> -->
-                            <th>Link GitHub</th>
-                            <th style="width: 10px;"></th>
-                        <tr>
-                    </thead>
-        
-                    <tbody id="table_object_body"></tbody>
-                </table>
             </div>
 
             </br>
+            <table id='list_table' class="list_table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>SM</th>
+                        <th>Descrição</th>
+                        <th>Share Point ID</th>
+                        <th>ESIM</th>
+                        <!-- <th>Teste EH</th>
+                        <th>Teste PRD</th> -->
+                        <th>Progresso</th>
+                        <th>Link</th>
+                    <tr>
+                </thead>
 
-            <label for="checklist_list" class="label">Check List</label>
-            <button onclick="buttonHideChecklist()"></button>
-            <div id="div_checklist" style="display: none;">                    
-                <input type="text" id="checklist_description" class="textbox">
-                <div id="command_buttons">
-                    <img src="src/save_icon.svg" onclick="addChecklist()" class="button_small">                  
-                    <img src="src/update_icon.svg" onclick="updateChecklist()" class="button_small">                 
-                    <!-- <img src="src/delete_icon.svg" onclick="deleteChecklist()" class="button_small"> -->
-                </div> 
-
-                <table id='list_checklist_table' class="list_tableChecklist">
-                    <thead>
-                        <tr>
-                            <!-- <th>ID</th> -->
-                            <th></th>
-                            <th></th>
-                            <th style="width: 10px;"></th>
-                            <th style="width: 10px;"></th>
-                            <th style="width: 10px;"></th>
-                        <tr>
-                    </thead>
-        
-                    <tbody id="table_checklist_body"></tbody>
-                </table>
-            </div>
+                <tbody id="table_body"></tbody>
+            </table>
             <br>
-            <div>
-                <textarea name="notes" id="textarea_notes" class="textarea"></textarea>
-            </div>
-
-            </br>
-
-            <div id="command_buttons">
-                <img src="src/save_icon.svg" onclick="addTask()" class="button">
-                <img src="src/update_icon.svg" onclick="updateTask()" class="button">
-                <img src="src/delete_icon.svg" onclick="deleteTask()" class="button">  
-                
-                <img src="src/button_up.png" onclick="upTask()" class="button">
-                <img src="src/button_down.png" onclick="downTask()" class="button">              
-            </div>            
-
+            <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
+            <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->  
+            <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button_very_small">      
+            <pre id="output"></pre>
+            
+        </div>
         </div>
 
-        </br>
-        <table id='list_table' class="list_table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>SM</th>
-                    <th>Descrição</th>
-                    <th>Share Point ID</th>
-                    <th>ESIM</th>
-                    <!-- <th>Teste EH</th>
-                    <th>Teste PRD</th> -->
-                    <th>Progresso</th>
-                    <th>Link</th>
-                <tr>
-            </thead>
-
-            <tbody id="table_body"></tbody>
-        </table>
-        <br>
-        <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
-        <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->  
-        <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button_very_small">      
-        <pre id="output"></pre>
-        
     </div>
+
+    <label id="time" style="position: absolute; bottom: 0.5%; right: 0.5%; color: white;">00:00</label>
 
     <script src="script/checkList.js"></script>
     <script src="script/object.js"></script>
