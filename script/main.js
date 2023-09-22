@@ -422,10 +422,10 @@ function clear(){
     elem.innerHTML = width + "%"  
 }
 
-function windowResize(){
+function windowResize(force_false){
     var display = document.getElementById("window").style.display;
 
-    if(display == "none"){
+    if(display == "none" || force_false){
         document.getElementById("window").style.display = null     
         document.getElementById("content").style.height = "initial"
         document.getElementById("content").style.width = "initial"
@@ -448,12 +448,19 @@ function windowResize(){
     }
 }
 
-var timeDisplay = document.getElementById("time");
+var timeDisplay = document.getElementById("time")
+var auto_close = 0
 
 function refreshTime() {
-  var dateString = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
-  var formattedString = dateString.replace(", ", " - ");
-  timeDisplay.innerHTML = formattedString;
+  var dateString = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
+  var formattedString = dateString.replace(", ", " - ")
+  timeDisplay.innerHTML = formattedString
+  //auto_close++
+
+  if(auto_close > 10){
+    windowResize(false)
+    auto_close = 0
+  }
 }
 
-setInterval(refreshTime, 1000);
+setInterval(refreshTime, 1000)

@@ -44,13 +44,13 @@ function showChecklist() {
 
         var el_checklist_up = document.createElement("img")
         el_checklist_up.setAttribute("type", "img")
-        el_checklist_up.setAttribute("src", "src/button_up.png")
+        el_checklist_up.setAttribute("src", "src/arrow-list-up.svg")
         el_checklist_up.setAttribute('onclick', `upChecklist(${pos})`)
         el_checklist_up.setAttribute('class', 'button_very_small')
 
         var el_checklist_down = document.createElement("img")
         el_checklist_down.setAttribute("type", "img")
-        el_checklist_down.setAttribute("src", "src/button_down.png")
+        el_checklist_down.setAttribute("src", "src/arrow-list-down.svg")
         el_checklist_down.setAttribute('onclick', `downChecklist(${pos})`)
         el_checklist_down.setAttribute('class', 'button_very_small')
 
