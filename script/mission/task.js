@@ -14,9 +14,7 @@ function showTasks() {
     task_list.forEach(item => {
         
         const pos = task_list.indexOf(item)
-
-        if(item.month != selected_month || item.year != selected_year) return
-
+        
         if(item['year'] == undefined){
             alert('Item '+ item.sm + ' sem ano definido, inserindo ao ano ' + selected_year)
 
@@ -61,6 +59,8 @@ function showTasks() {
             task_list[pos] = json_array
             LocalStorageSave(null, task_list)
         }
+
+        if(item.month != selected_month || item.year != selected_year) return
 
         var line = document.createElement("tr")
         var td_id = document.createElement("td")
