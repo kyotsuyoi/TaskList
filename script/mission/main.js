@@ -10,6 +10,7 @@ var test_eh = document.getElementById('test_eh')
 var test_eh = document.getElementById('test_eh')
 var lib = document.getElementById('lib')
 var object_name = document.getElementById('object_name')
+var label_window = document.getElementById('label_window')
 
 const div_liberations = document.getElementById('div_liberations')
 const div_objects = document.getElementById('div_objects')
@@ -17,9 +18,11 @@ const div_checklist = document.getElementById('div_checklist')
 
 const combobox_month = document.getElementById('combobox_month')
 
+var selected_year = JSON.parse(window.localStorage.getItem('selected_year'))
 var selected_month = JSON.parse(window.localStorage.getItem('selected_month'))
 
-windowResize()
+label_window.textContent = selected_year
+
 //showTasks()
 setComboMonthOptions()
 
@@ -45,18 +48,6 @@ function buttonHideChecklist(){
     }else{
         div_checklist.style.display = 'none'
     }
-}
-
-function LocalStorageSave(action) {
-    switch (action){
-        case 1:
-            window.localStorage.setItem('selected_month', JSON.stringify(selected_month))
-        break
-
-        default: //save all
-            window.localStorage.setItem('list_tarefas', JSON.stringify(task_list))
-    }
-    
 }
 
 function downloadFile() {
@@ -89,7 +80,7 @@ document.getElementById('inputFile').addEventListener('change', function() {
     file.onload = () => {    
         var json_task_list = JSON.parse(file.result)
         task_list = json_task_list.task_list
-        LocalStorageSave()
+        LocalStorageSave(null, task_list)
         showTasks()
         task_list.length
     }
@@ -324,14 +315,14 @@ function monthSelectedChange(){
     clear()
     showTasks()
     
-    LocalStorageSave(1)
+    LocalStorageSave(1, selected_month)
 }
 
 function getNextAndPreviousMonth(month){
     var json_months = {}
     switch (month){
         case 'JAN':
-            json_months['previous'] = undefined
+            json_months['previous'] = 'PVY'
             json_months['next'] = 'FEV'
         break
 
@@ -387,7 +378,7 @@ function getNextAndPreviousMonth(month){
 
         case 'DEZ':
             json_months['previous'] = 'NOV'
-            json_months['next'] = undefined
+            json_months['next'] = 'NXY'
         break
 
         default: 
@@ -422,45 +413,32 @@ function clear(){
     elem.innerHTML = width + "%"  
 }
 
-function windowResize(force_false){
-    var display = document.getElementById("window").style.display;
+// function windowResize(force_false){
+//     var display = document.getElementById("window").style.display;
 
-    if(display == "none" || force_false){
-        document.getElementById("window").style.display = null     
-        document.getElementById("content").style.height = "initial"
-        document.getElementById("content").style.width = "initial"
-        document.getElementById("content").style.padding = "10px"
-        document.getElementById("button_window").src = "src/arrow-drop-up.svg"
-        document.getElementById("button_window").style.width = "30px"
-        document.getElementById("body").style.justifyContent = "center"
-        document.getElementById("label_window").style.float = "right"
-        document.getElementById("label_window").style.position = "initial"        
-    }else{
-        document.getElementById("window").style.display = "none"   
-        document.getElementById("content").style.height = "none"     
-        document.getElementById("content").style.width = "none"
-        document.getElementById("content").style.padding = "0px"
-        document.getElementById("button_window").src = "src/SF-Folder.png"
-        document.getElementById("button_window").style.width = "130px"
-        document.getElementById("body").style.justifyContent = "left"
-        document.getElementById("label_window").style.float = "none"
-        document.getElementById("label_window").style.position = "absolute"
-    }
+//     if(display == "none" || force_false){
+//         document.getElementById("window").style.display = null     
+//         document.getElementById("content").style.height = "initial"
+//         document.getElementById("content").style.width = "initial"
+//         document.getElementById("content").style.padding = "10px"
+//         document.getElementById("button_window").src = "src/arrow-drop-up.svg"
+//         document.getElementById("button_window").style.width = "30px"
+//         document.getElementById("body").style.justifyContent = "center"
+//         document.getElementById("label_window").style.float = "right"
+//         document.getElementById("label_window").style.position = "initial"        
+//     }else{
+//         document.getElementById("window").style.display = "none"   
+//         document.getElementById("content").style.height = "none"     
+//         document.getElementById("content").style.width = "none"
+//         document.getElementById("content").style.padding = "0px"
+//         document.getElementById("button_window").src = "src/SF-Folder.png"
+//         document.getElementById("button_window").style.width = "130px"
+//         document.getElementById("body").style.justifyContent = "left"
+//         document.getElementById("label_window").style.float = "none"
+//         document.getElementById("label_window").style.position = "absolute"
+//     }
+// }
+
+function closeTask(){
+    window.location.href='desktop.html';
 }
-
-var timeDisplay = document.getElementById("time")
-var auto_close = 0
-
-function refreshTime() {
-  var dateString = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
-  var formattedString = dateString.replace(", ", " - ")
-  timeDisplay.innerHTML = formattedString
-  //auto_close++
-
-  if(auto_close > 10){
-    windowResize(false)
-    auto_close = 0
-  }
-}
-
-setInterval(refreshTime, 1000)

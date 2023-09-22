@@ -15,15 +15,52 @@ function showTasks() {
         
         const pos = task_list.indexOf(item)
 
-        if(item['month'] == undefined){
-            alert('Item '+ item.sm + ' sem mês definido, inserindo ao mês ' + selected_month)
-            //item['month'] = selected_month
-            task_list[pos]['month'] = selected_month            
-            LocalStorageSave()
+        if(item.month != selected_month || item.year != selected_year) return
+
+        if(item['year'] == undefined){
+            alert('Item '+ item.sm + ' sem ano definido, inserindo ao ano ' + selected_year)
+
+            json_array = {}
+            json_array["year"] = selected_year
+            json_array["month"] = item['month']
+            json_array["sm"] = item['sm']
+            json_array["description"] = item['description']
+            json_array["spid"] = item['spid']
+            json_array["esim"] = item['esim']
+            json_array["test_eh"] = item['test_eh']
+            json_array["test_prd"] = item['test_prd'] 
+            json_array["textarea_notes"] = item['textarea_notes']
+
+            json_array["lib_list"] = item['lib_list']
+            json_array["object_list"] = item['object_list']
+            json_array["checklist_list"] = item['checklist_list']
+
+            task_list[pos] = json_array
+            LocalStorageSave(null, task_list)
         }
 
-        if(item.month != selected_month) return
+        if(item['month'] == undefined){
+            alert('Item '+ item.sm + ' sem mês definido, inserindo ao mês ' + selected_month)
+            task_list[pos]['month'] = selected_month    
 
+            json_array = {}
+            json_array["year"] = item['year']
+            json_array["month"] = selected_month
+            json_array["sm"] = item['sm']
+            json_array["description"] = item['description']
+            json_array["spid"] = item['spid']
+            json_array["esim"] = item['esim']
+            json_array["test_eh"] = item['test_eh']
+            json_array["test_prd"] = item['test_prd'] 
+            json_array["textarea_notes"] = item['textarea_notes']
+
+            json_array["lib_list"] = item['lib_list']
+            json_array["object_list"] = item['object_list']
+            json_array["checklist_list"] = item['checklist_list']
+
+            task_list[pos] = json_array
+            LocalStorageSave(null, task_list)
+        }
 
         var line = document.createElement("tr")
         var td_id = document.createElement("td")
@@ -79,7 +116,7 @@ function showTasks() {
 
         line.setAttribute('onclick', `selectedTask(${pos})`)
 
-        table_body.appendChild(line)
+        table_body.appendChild(line)   
 
         item=undefined
     })
@@ -112,7 +149,12 @@ function addTask() {
     if (sm.value == "" || description.value == ""){
         alert("Insira o número e descrição da SM/Chamado")
         return
-    }    
+    }   
+
+    if(selected_year == ''){
+        alert("Selecione o ano")
+        return
+    }
 
     if(selected_month == ''){
         alert("Selecione o mês")
@@ -120,6 +162,7 @@ function addTask() {
     }
 
     json_array = {}
+    json_array["year"] = selected_year
     json_array["month"] = selected_month
     json_array["sm"] = sm.value
     json_array["description"] = description.value
@@ -138,7 +181,7 @@ function addTask() {
     clear()
 
     showTasks()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function updateTask(){
@@ -146,6 +189,11 @@ function updateTask(){
         alert("Insira o número e descrição da SM/Chamado")
         return
     }  
+
+    if(selected_year == ''){
+        alert("Selecione o ano")
+        return
+    }
 
     if(selected_month == ''){
         alert("Selecione o mês")
@@ -161,6 +209,7 @@ function updateTask(){
     }
 
     json_array = {}
+    json_array["year"] = selected_year
     json_array["month"] = selected_month
     json_array["sm"] = sm.value
     json_array["description"] = description.value
@@ -186,7 +235,7 @@ function updateTask(){
     task_list[selected_position] = json_array
 
     showTasks()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
     calculateProgress()
 }
 
@@ -203,7 +252,7 @@ function deleteTask() {
 
     clear()
     
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
     showTasks()
 }
 
@@ -214,14 +263,24 @@ function upTask() {
 
     var json_months = getNextAndPreviousMonth(selected_month)
     if(json_months.previous == undefined) return
-    if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o mês anterior ('+ json_months.previous +')?')) {        
-        return
+
+    if(json_months.previous == "PVY"){
+        var previous_year = Number(task_list[selected_position].year)-1
+        if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o ano anterior ('+ previous_year +')?')) {        
+            return
+        }
+        task_list[selected_position].year = previous_year
+        task_list[selected_position].month = 'DEZ'
+    }else{
+        if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o mês anterior ('+ json_months.previous +')?')) {        
+            return
+        }
+        task_list[selected_position].month = json_months.previous
     }
 
-    task_list[selected_position].month = json_months.previous
     clear()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
     showTasks()
 }
 
@@ -232,14 +291,23 @@ function downTask() {
 
     var json_months = getNextAndPreviousMonth(selected_month)
     if(json_months.next == undefined) return
-    if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o próximo mês ('+ json_months.next +')?')) {        
-        return
-    }
 
-    task_list[selected_position].month = json_months.next
+    if(json_months.next == "NXY"){
+        var next_year = Number(task_list[selected_position].year)+1
+        if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o próximo ano ('+ next_year +')?')) {        
+            return
+        }
+        task_list[selected_position].year = next_year
+        task_list[selected_position].month = 'JAN'
+    }else{
+        if (!confirm('Deseja realmente mover a tarefa (ID: '+selected_position+') para o próximo mês ('+ json_months.next +')?')) {        
+            return
+        }
+        task_list[selected_position].month = json_months.next
+    }
     clear()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
     showTasks()
 }
 

@@ -104,7 +104,7 @@ function addChecklist() {
 
     showChecklist()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function updateChecklist() {
@@ -136,7 +136,7 @@ function updateChecklist() {
 
     showChecklist()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function deleteChecklist() {
@@ -156,7 +156,7 @@ function deleteChecklist() {
 
     lib.value = ''
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function deleteChecklist(inner_position) {
@@ -174,7 +174,7 @@ function deleteChecklist(inner_position) {
 
     lib.value = ''
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function checkChecklist(position){
@@ -191,7 +191,7 @@ function checkChecklist(position){
     task.checklist_list[position] = item
 
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function upChecklist(inner_position) {
@@ -208,7 +208,7 @@ function upChecklist(inner_position) {
 
     showChecklist()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function downChecklist(inner_position) {
@@ -225,7 +225,7 @@ function downChecklist(inner_position) {
 
     showChecklist()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function clearChecklist(){

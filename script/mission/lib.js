@@ -101,7 +101,7 @@ function addLib() {
 
     showLibs()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function updateLib() {
@@ -134,7 +134,7 @@ function updateLib() {
 
     showLibs()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function deleteLib(inner_position) {
@@ -149,14 +149,14 @@ function deleteLib(inner_position) {
     }
 
     task.lib_list.splice(inner_position, 1)
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
     showLibs()
 
     inner_position = -1
 
     lib.value = ''
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function checkLibEvAnex(position){
@@ -173,7 +173,7 @@ function checkLibEvAnex(position){
     task.lib_list[position] = item
 
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function checkLibMontOK(position){
@@ -190,7 +190,7 @@ function checkLibMontOK(position){
     task.lib_list[position] = item
 
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function libClear(){

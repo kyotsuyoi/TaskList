@@ -143,7 +143,7 @@ function addObject() {
 
     showObjects()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function updateObject() {
@@ -177,7 +177,7 @@ function updateObject() {
 
     showObjects()
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function deleteObject(inner_position) {
@@ -197,7 +197,7 @@ function deleteObject(inner_position) {
 
     lib.value = ''
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function checkObjectEqz(position){
@@ -214,7 +214,7 @@ function checkObjectEqz(position){
     task.object_list[position] = item
 
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function checkObjectTestACT(position){
@@ -231,7 +231,7 @@ function checkObjectTestACT(position){
     task.object_list[position] = item
 
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function checkObjectTestPRD(position){
@@ -248,7 +248,7 @@ function checkObjectTestPRD(position){
     task.object_list[position] = item
 
     calculateProgress()
-    LocalStorageSave()
+    LocalStorageSave(null, task_list)
 }
 
 function objectClear(){
