@@ -15,6 +15,13 @@ var label_window = document.getElementById('label_window')
 const div_liberations = document.getElementById('div_liberations')
 const div_objects = document.getElementById('div_objects')
 const div_checklist = document.getElementById('div_checklist')
+const command_buttons_main = document.getElementById('command_buttons_main')
+const div_task_info_hide = document.getElementById('div_task_info_hide')
+const div_task_info_hide_2 = document.getElementById('div_task_info_hide_2')
+
+const div_hide_lib = document.getElementById('div_hide_lib')
+const div_hide_obj = document.getElementById('div_hide_obj')
+const div_hide_chl = document.getElementById('div_hide_chl')
 
 const combobox_month = document.getElementById('combobox_month')
 
@@ -29,25 +36,72 @@ setComboMonthOptions()
 function buttonHideLib(){
     if (div_liberations.style.display === "none") {
         div_liberations.style.display = 'inline'
+
+        div_hide_obj.style.display = 'none'
+        div_hide_chl.style.display = 'none'
     }else{
         div_liberations.style.display = 'none'
+
+        div_hide_obj.style.display = 'inline'
+        div_hide_chl.style.display = 'inline'
     }
+    buttonHideVerify();
 }
 
 function buttonHideObjects(){
     if (div_objects.style.display === "none") {
         div_objects.style.display = 'inline'
+
+        div_hide_lib.style.display = 'none'
+        div_hide_chl.style.display = 'none'
     }else{
         div_objects.style.display = 'none'
+
+        div_hide_lib.style.display = 'inline'
+        div_hide_chl.style.display = 'inline'
     }
+    buttonHideVerify();
 }
 
 function buttonHideChecklist(){
     if (div_checklist.style.display === "none") {
         div_checklist.style.display = 'inline'
+
+        div_hide_lib.style.display = 'none'
+        div_hide_obj.style.display = 'none'
     }else{
         div_checklist.style.display = 'none'
+
+        div_hide_lib.style.display = 'inline'
+        div_hide_obj.style.display = 'inline'
     }
+    buttonHideVerify();
+}
+
+function buttonHideVerify(){
+    if(div_liberations.style.display === 'inline' || div_objects.style.display === 'inline' || div_checklist.style.display === 'inline'){
+        command_buttons_main.style.display = 'none'
+        div_task_info_hide.style.display = 'none'    
+        div_task_info_hide_2.style.display = 'none' 
+    }else{
+        command_buttons_main.style.display = 'flex'
+        div_task_info_hide.style.display = 'inline'  
+        div_task_info_hide_2.style.display = 'inline'
+    }
+}
+
+function hideReset(){
+    command_buttons_main.style.display = 'flex'
+    div_task_info_hide.style.display = 'inline'  
+    div_task_info_hide_2.style.display = 'inline'
+
+    div_liberations.style.display = 'none'
+    div_objects.style.display = 'none'
+    div_checklist.style.display = 'none'
+
+    div_hide_lib.style.display = 'inline'
+    div_hide_obj.style.display = 'inline'
+    div_hide_chl.style.display = 'inline'
 }
 
 function downloadFile() {
@@ -234,6 +288,10 @@ function calc(item){
 }
 
 function buttonCopyInfo(){
+    if(sm.value == '' || description.value == ''){
+        alert("Sem o numero e/ou nome de SM/Chamado")
+        return;
+    }
     var text = ''
     var text_temp = sm.value
     text = sm.value + ' - ' + description.value
@@ -241,6 +299,7 @@ function buttonCopyInfo(){
     sm.select()
     document.execCommand('copy')
     sm.value = text_temp
+    alert("Numero e nome de SM/Chamado copiado (CTRL+C)")
 }
 
 function setComboMonthOptions(){
@@ -406,6 +465,8 @@ function clear(){
     libClear()
     objectClear()
     clearChecklist()
+
+    hideReset()
 
     var elem = document.getElementById("myBar")
     var width = 0

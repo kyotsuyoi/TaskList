@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Lista de senhas</title>    
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-table.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-tableChecklist.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-progress.css" media="screen" />
+</head>
+
+<body id="body" background="src/SF-BG.png">
+    
+    <div class="body">
+    
+        <div id="content">
+        
+        <div style="justify-content: center;">
+            <img id="button_window" src="src/arrow-drop-up.svg" onclick="closePassWD()" style="width: 30px;">
+        </div>
+        
+        <div id="window"> 
+            <!-- <h2 class="title">Lista de tarefas</h2> -->
+            <div class="input-button">
+
+                <div>                
+                    <label for="task_list" class="label">ID</label>
+                    
+                    <label for="task_list" id="id" class="label"></label>
+                    </br>
+                </div> 
+
+                <label for="task_list" class="label">Ambiente</label>
+                <select id="combobox_environment" style="float: right;">
+                    <option value=""></option>
+                </select>                  
+
+                <div>
+                    <label for="task_list" class="label">Descrição</label>
+                    <input type="text" id="description" class="textbox">
+                </div>                   
+                
+                <label for="passwd_list" class="label">Password List</label>
+                <button onclick="buttonHidePasswordlist()"></button>
+                <div id="div_passwdlist" style="display: none;">   
+                    <div>    
+                        <label for="task_list" class="label">Descrição da senha</label>           
+                        <input type="text" id="passwdlist_description" class="textbox">
+                    
+                        <label for="task_list" class="label">Senha</label>
+                        <input type="password" id="passwdlist_passwd" class="textbox">
+                    </div>  
+                    <div id="command_buttons">
+                        <img src="src/save_icon.svg" onclick="addPassWD()" class="button_small">                  
+                        <img src="src/update_icon.svg" onclick="updatePassWD()" class="button_small">                 
+                        <!-- <img src="src/delete_icon.svg" onclick="deleteChecklist()" class="button_small"> -->
+                    </div> 
+
+                    <table id='list_passwdlist_table' class="list_table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descrição</th>
+                                <th>Senha</th>
+                                <th style="width: 10px;"></th>
+                            <tr>
+                        </thead>
+            
+                        <tbody id="table_passwdlist_body"></tbody>
+                    </table>
+
+                    <label for="passwd_list" class="label">Ocultar senha</label>
+                    <button onclick="buttonHidePass()"></button>
+                    <label for="passwd_list" class="label">Copiar senha</label>
+                    <button onclick="buttonCopyInfo()"></button>
+                </div>
+
+                <div id="command_buttons">
+                    <img src="src/save_icon.svg" onclick="addType()" class="button">
+                    <img src="src/update_icon.svg" onclick="updateType()" class="button">
+                    <img src="src/delete_icon.svg" onclick="deleteType()" class="button">  
+                    
+                    <img src="src/button_month_up.svg" onclick="upTask()" class="button">
+                    <img src="src/button_month_down.svg" onclick="downTask()" class="button">              
+                </div>            
+
+            </div>
+
+            </br>
+            <table id='list_table' class="list_table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descrição</th>
+                        <th>Ambiente</th>
+                    <tr>
+                </thead>
+
+                <tbody id="table_body"></tbody>
+            </table>
+            <br>
+            <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
+            <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->  
+            <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button_very_small">      
+            <pre id="output"></pre>
+            
+        </div>
+        </div>
+
+    </div>
+
+    <label id="time" style="position: absolute; bottom: 0.5%; right: 0.5%; color: white;">LOADING...</label>
+
+    <script src="script/passwd/passwd.js"></script>
+    <script src="script/passwd/type.js"></script>
+    <script src="script/passwd/main.js"></script>
+    <script src="script/common/localStorage.js"></script>
+    <script src="script/common/FileSaver.js"></script>
+    <script src="script/common/clock.js"></script>
+</body>
+
+</html>

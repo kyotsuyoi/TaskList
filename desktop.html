@@ -7,24 +7,35 @@
 </head>
 
 <body background="src/SF-BG.png" style="justify-content: left;">
-    <div style="height: none; width: 10px; padding: 0px;">      
+
+    <div style="height: none; width: 10px; padding: 0px;" onclick="openLink()">      
+        <label id="label_window" class="label" style="position: absolute; padding-left: 10px; float: none;">LINKS</label>
+        <img id="button_window" src="src/SF-Folder.png" style="width: 130px;">        
+    </div>
+
+    <div style="height: none; width: 10px; padding: 0px;" onclick="openPassWd()">      
         <label id="label_window" class="label" style="position: absolute; padding-left: 10px; float: none;">PASSWD</label>
-        <img id="button_window" src="src/SF-Folder.png" onclick="" style="width: 130px;">        
+        <img id="button_window" src="src/SF-Folder.png" style="width: 130px;">        
     </div>
 
-    <div style="height: none; width: 10px; padding: 0px;">      
+    <div style="height: none; width: 10px; padding: 0px;" onclick="openTask('2022')">      
         <label id="label_window" class="label" style="position: absolute; padding-left: 10px; float: none;">Y2K22</label>
-        <img id="button_window" src="src/SF-Folder.png" onclick="openTask('2022')" style="width: 130px;">        
+        <img id="button_window" src="src/SF-Folder.png" style="width: 130px;">        
     </div>
 
-    <div style="height: none; width: 10px; padding: 0px;">      
+    <div style="height: none; width: 10px; padding: 0px;" onclick="openTask('2023')">      
         <label id="label_window" class="label" style="position: absolute; padding-left: 10px; float: none;">Y2K23</label>
-        <img id="button_window" src="src/SF-Folder.png" onclick="openTask('2023')" style="width: 130px;">
+        <img id="button_window" src="src/SF-Folder.png" style="width: 130px;">
     </div>
 
-    <div style="height: none; width: 10px; padding: 0px;">      
+    <div style="height: none; width: 10px; padding: 0px;" onclick="openTask('2024')">      
         <label id="label_window" class="label" style="position: absolute; padding-left: 10px; float: none;">Y2K24</label>
-        <img id="button_window" src="src/SF-Folder.png" onclick="openTask('2024')" style="width: 130px;">
+        <img id="button_window" src="src/SF-Folder.png" style="width: 130px;">
+    </div>
+	
+	<div style="height: none; width: 10px; padding: 0px; "onclick="openTask('2025')">      
+        <label id="label_window" class="label" style="position: absolute; padding-left: 10px; float: none;">Y2K25</label>
+        <img id="button_window" src="src/SF-Folder.png" style="width: 130px;">
     </div>
 
     <label id="time" style="position: absolute; bottom: 0.5%; right: 0.5%; color: white;">LOADING...</label>

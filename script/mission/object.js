@@ -56,7 +56,8 @@ function showObjects() {
         var linkText = document.createTextNode("LINK")
         a.appendChild(linkText)
         a.title = "LINK"
-        a.href = "http://git/"+item["object_name"]
+        // a.href = "https://github.com/lmigtech/"+item["object_name"]
+        a.href = "https://github.com/"+item["object_name"]
         var t_link_git = a
 
         if(isTFSFile){

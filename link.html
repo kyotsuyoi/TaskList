@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Lista de senhas</title>    
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-table.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-tableChecklist.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/style-progress.css" media="screen" />
+</head>
+
+<body id="body" background="src/SF-BG.png">
+    
+    <div class="body">
+    
+        <div id="content">
+        
+        <div style="justify-content: center;">
+            <img id="button_window" src="src/arrow-drop-up.svg" onclick="closeLink()" style="width: 30px;">
+        </div>
+        
+        <div id="window"> 
+            <!-- <h2 class="title">Lista de tarefas</h2> -->
+            <div class="input-button">
+
+                <div>                
+                    <label for="task_list" class="label">ID</label>
+                    
+                    <label for="task_list" id="id" class="label"></label>
+                    </br>
+                </div> 
+
+                <label for="task_list" class="label">Ambiente</label>
+                <select id="combobox_environment" style="float: right;">
+                    <option value=""></option>
+                </select>                  
+
+                <div>
+                    <label for="task_list" class="label">Descrição</label>
+                    <input type="text" id="description" class="textbox">
+                </div> 
+                
+                <div>
+                    <label for="task_list" class="label">Link</label>
+                    <input type="text" id="link" class="textbox">
+                </div>   
+
+                <div id="command_buttons">
+                    <img src="src/save_icon.svg" onclick="addLink()" class="button">
+                    <img src="src/update_icon.svg" onclick="updateLink()" class="button">
+                    <img src="src/delete_icon.svg" onclick="deleteLink()" class="button">                                 
+                </div>            
+
+            </div>
+
+            </br>
+            <table id='list_table' class="list_table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descrição</th>
+                        <th>Link</th>
+                        <th>Ambiente</th>
+                    <tr>
+                </thead>
+
+                <tbody id="table_body"></tbody>
+            </table>
+            <br>
+            <input type="file" name="inputFile" id="inputFile" src="src/upload_file_icon.svg">
+            <!-- <img type="file" src="src/upload_file_icon.svg" name="inputFile" id="inputFile" class="button"> -->  
+            <img src="src/download_file_icon.svg" onclick="downloadFile()" class="button_very_small">      
+            <pre id="output"></pre>
+            
+        </div>
+        </div>
+
+    </div>
+
+    <label id="time" style="position: absolute; bottom: 0.5%; right: 0.5%; color: white;">LOADING...</label>
+
+    <script src="script/link/link.js"></script>
+    <script src="script/link/main.js"></script>
+    <script src="script/common/localStorage.js"></script>
+    <script src="script/common/FileSaver.js"></script>
+    <script src="script/common/clock.js"></script>
+</body>
+
+</html>

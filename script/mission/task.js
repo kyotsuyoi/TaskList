@@ -91,7 +91,7 @@ function showTasks() {
         var linkText = document.createTextNode("LINK")
         a.appendChild(linkText)
         a.title = "LINK"
-        a.href = "https://forge/"+item.sm
+        a.href = "https://hdi.atlassian.net/jira/servicedesk/projects/LBASBT/queues/issue/"+item.sm
         var t_link = a
 
         td_id.appendChild(t_id)

@@ -85,9 +85,13 @@ function selectedChecklist(position){
 
 function addChecklist() {
     if (checklist_description.value == ""){
-        alert("Insira a descrição do item")
+        alert("Insira a descrição da senha")
         return
     }  
+
+    // if (selected_checklist_position == -1) {
+    //     return
+    // }
 
     var task = task_list[selected_position]
     if (task.checklist_list == null) {
@@ -109,7 +113,7 @@ function addChecklist() {
 
 function updateChecklist() {
     if (checklist_description.value == ""){
-        alert("Insira a descrição do item")
+        alert("Insira a descrição da senha")
         return
     }     
 
